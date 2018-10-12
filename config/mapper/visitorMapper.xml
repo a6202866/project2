@@ -10,4 +10,7 @@
     <select id="queryByNamePassword" parameterType="Visitor" resultType="Visitor">
         select * from visitors where name = #{name} and password = #{password};
     </select>
+    <update id="changePassword" parameterType="Visitor">
+        update visitors set password = #{password} where name = #{name};
+    </update>
 </mapper>

@@ -11,4 +11,5 @@ public interface IVisitorDao {
     public void add(Visitor visitor);
     public Visitor queryByName(String name);
     public Visitor queryByNamePassword(Visitor visitor);
+    public void changePassword(Visitor visitor);
 }

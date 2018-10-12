@@ -47,6 +47,8 @@
                 if($("#ipt1").val()!=${sessionScope.password}){
                     alert("原密码错误");
                     return false;
+                }else {
+                    alert("修改成功！");
                 }
             })
         })
@@ -57,10 +59,10 @@
 <div class="dowebok">
     <form>
     请输入原密码:<br>
-        <input type="text" value="${sessionScope.name}">
+        <input type="text" name="name" value="${sessionScope.name}">
     <input id="ipt1" type="text" class="form-control" placeholder="Text input">
     请输入新密码:
-    <input id="ipt2" type="text" class="form-control" placeholder="Text input">
+    <input id="ipt2" name="password" type="text" class="form-control" placeholder="Text input">
     请在输入一次新密码:
     <input id="ipt3" type="text" class="form-control" placeholder="Text input">
     <span id="sp1" style="color: coral" hidden>新密码不一致！</span>

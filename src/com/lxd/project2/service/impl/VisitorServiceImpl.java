@@ -35,4 +35,9 @@ public class VisitorServiceImpl implements IVisitorService{
         return iVisitorDao.queryByNamePassword(visitor);
     }
 
+    @Override
+    public void changePassword(Visitor visitor) {
+        iVisitorDao.changePassword(visitor);
+    }
+
 }

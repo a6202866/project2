@@ -51,4 +51,11 @@ public class VisitorController {
             return "employee/employee";
         }
     }
+    @RequestMapping("changePassword")
+    public String changePassword(Visitor visitor,HttpSession session){
+        iVisitorService.changePassword(visitor);
+        Visitor visitor1 = iVisitorService.queryByNamePassword(visitor);
+        session.setAttribute("user",visitor1);
+        return "visitor/visitor";
+    }
 }
