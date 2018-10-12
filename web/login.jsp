@@ -62,7 +62,7 @@
 <body>
     <div class="dowebok">
         <div class="logo"></div>
-        <form action="/Visitor/login">
+        <form action="/Visitor/login" method="post">
         <div class="form-item">
             <input id="name" name="name" type="text" autocomplete="off" placeholder="用户名">
         </div>

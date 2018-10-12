@@ -20,7 +20,11 @@
     <link href="/js/bootstrap.min.css" rel="stylesheet">
     <script src="/js/jquery-1.10.2.min.js"></script>
     <script src="/js/bootstrap-table.js"></script>
-    <script></script>
+    <script>
+        $(function () {
+            $("#l5").addClass('active');
+        })
+    </script>
 </head>
 <body>
     <jsp:include page="/managerModel.jsp"></jsp:include>
