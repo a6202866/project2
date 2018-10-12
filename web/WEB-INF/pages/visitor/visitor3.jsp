@@ -25,10 +25,47 @@
         $(function () {
             $("#l1").removeClass();
             $("#l3").addClass('active');
+            $("#ipt3").blur(function () {
+                if($("#ipt2").val()!=$("#ipt3").val()){
+                    $("#sp1").show();
+                    $("#btn1").attr('disabled',true);
+                }else {
+                    $("#sp1").hide();
+                    $("#btn1").attr('disabled',false);
+                }
+            })
+            $("#ipt2").blur(function () {
+                if($("#ipt2").val()!=$("#ipt3").val()){
+                    $("#sp1").show();
+                    $("#btn1").attr('disabled',true);
+                }else {
+                    $("#sp1").hide();
+                    $("#btn1").attr('disabled',false);
+                }
+            })
+            $("#btn1").click(function () {
+                if($("#ipt1").val()!=${sessionScope.password}){
+                    alert("原密码错误");
+                    return false;
+                }
+            })
         })
     </script>
 </head>
 <body>
 <jsp:include page="/visitorModel.jsp"></jsp:include>
+<div class="dowebok">
+    <form>
+    请输入原密码:<br>
+        <input type="text" value="${sessionScope.name}">
+    <input id="ipt1" type="text" class="form-control" placeholder="Text input">
+    请输入新密码:
+    <input id="ipt2" type="text" class="form-control" placeholder="Text input">
+    请在输入一次新密码:
+    <input id="ipt3" type="text" class="form-control" placeholder="Text input">
+    <span id="sp1" style="color: coral" hidden>新密码不一致！</span>
+    <button id="btn1" type="submit">提交</button>
+    </form>
+</div>
 </body>
 </html>

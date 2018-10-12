@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * Created by Administrator on 2018/10/11 0011.
  */
@@ -38,8 +40,9 @@ public class VisitorController {
         }
     }
     @RequestMapping("login")
-    public String login(Visitor visitor){
+    public String login(Visitor visitor, HttpSession session){
         Visitor visitor1 = iVisitorService.queryByNamePassword(visitor);
+        session.setAttribute("user",visitor1);
         if(visitor1.getCls()==0){
             return "manager/manager";
         }else if(visitor1.getCls()==1){
