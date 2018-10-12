@@ -30,10 +30,10 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li id="l1"  class="active"><a href="#">反馈</a></li>
-                <li id="l2"><a href="#">查看简历 <span class="sr-only">(current)</span></a></li>
-                <li id="l3"><a href="#">修改密码</a></li>
-                <li id="l4"><a href="#">其他</a></li>
+                <li id="l1"  class="active"><a href="/WEB-INF/pages/visitor/visitor1.jsp">反馈</a></li>
+                <li id="l2"><a href="/WEB-INF/pages/visitor/visitor2.jsp">查看简历 <span class="sr-only">(current)</span></a></li>
+                <li id="l3"><a href="/WEB-INF/pages/visitor/visitor3.jsp">修改密码</a></li>
+                <li id="l4"><a href="/WEB-INF/pages/visitor/visitor4.jsp">其他</a></li>
                 </li>
             </ul>
 

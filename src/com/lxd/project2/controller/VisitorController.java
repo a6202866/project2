@@ -41,11 +41,11 @@ public class VisitorController {
     public String login(Visitor visitor){
         Visitor visitor1 = iVisitorService.queryByNamePassword(visitor);
         if(visitor1.getCls()==0){
-            return "manager";
+            return "manager/manager";
         }else if(visitor1.getCls()==1){
-            return "visitor";
+            return "visitor/visitor";
         }else{
-            return "employee";
+            return "employee/employee";
         }
     }
 }
