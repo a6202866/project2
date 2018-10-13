@@ -1,18 +1,18 @@
 package com.lxd.project2.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.lxd.project2.entity.Recruit;
-import com.lxd.project2.entity.Visitor;
-import com.lxd.project2.service.IRecruitService;
-import com.lxd.project2.service.IVisitorService;
+import com.lxd.project2.entity.*;
+import com.lxd.project2.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.util.Date;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -27,6 +27,12 @@ public class VisitorController {
     private IVisitorService iVisitorService;
     @Autowired
     private IRecruitService iRecruitService;
+    @Autowired
+    private IPositionService iPositionService;
+    @Autowired
+    private IDeptService iDeptService;
+    @Autowired
+    private IResumeService iResumeService;
     @RequestMapping("queryByName")
     @ResponseBody
     public String queryByName(String name){
@@ -61,13 +67,20 @@ public class VisitorController {
             return "employee/employee";
         }
     }
-    @RequestMapping("getRecruit")
+    @RequestMapping(value = "getRecruit", produces = "application/json;charset=utf-8")
     @ResponseBody
     public String getRecruit(HttpServletRequest request){
         List<Recruit> list = iRecruitService.queryAll();
         request.setAttribute("recruit",list);
         String json = JSON.toJSONString(list);
         System.out.println(json);
+        return json;
+    }
+    @RequestMapping(value="findByDept", produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String findByDept(String dept){
+        List<Position> list = iPositionService.queryByDept(dept);
+        String  json = JSON.toJSONString(list);
         return json;
     }
     @RequestMapping("changePassword")
@@ -87,7 +100,36 @@ public class VisitorController {
         return "visitor/visitor1";
     }
     @RequestMapping("visitor2")
-    public String visitor2(){
+    public String visitor2(HttpServletRequest request,HttpSession session){
+        List<Dept> depts = iDeptService.queryAll();
+        List<Position> positions = iPositionService.queryAll();
+        Visitor visitor = (Visitor) session.getAttribute("user");
+        String name = visitor.getName();
+        Resume resume = iResumeService.queryByUserName(name);
+        session.setAttribute("resume",resume);
+        System.out.println("ÎÒµÄ"+resume);
+        request.setAttribute("dept",depts);
+        request.setAttribute("position",positions);
+        return "visitor/visitor2";
+    }
+    @RequestMapping("addResume")
+    public String addResume(HttpSession session,Resume resume){
+        resume.setDate(new Date());
+        iResumeService.add(resume);
+        Visitor visitor = (Visitor) session.getAttribute("user");
+        String name = visitor.getName();
+        Resume resume1 = iResumeService.queryByUserName(name);
+        session.setAttribute("resume",resume);
+        return "visitor/visitor2";
+    }
+    @RequestMapping("updateesume")
+    public String updateesume(Resume resume,HttpSession session){
+        resume.setDate(new Date());
+        iResumeService.update(resume);
+        Visitor visitor = (Visitor) session.getAttribute("user");
+        String name = visitor.getName();
+        Resume resume1 = iResumeService.queryByUserName(name);
+        session.setAttribute("resume",resume);
         return "visitor/visitor2";
     }
     @RequestMapping("visitor3")
