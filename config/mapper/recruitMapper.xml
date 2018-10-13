@@ -8,4 +8,7 @@
     <select id="queryAll" resultType="Recruit">
         SELECT * FROM recruit;
     </select>
+    <select id="queryByID" resultType="Recruit" parameterType="int">
+        SELECT * from recruit WHERE id = #{id};
+    </select>
 </mapper>

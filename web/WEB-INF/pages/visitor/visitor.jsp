@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -29,7 +30,7 @@
         $(function () {
             $("#l1").removeClass();
         })
-        $(function () {
+       /* $(function () {
             $('#tb1').bootstrapTable({
                 url: "/Visitor/getRecruit",         //请求后台的URL（*）
                 method: 'post',                        //请求方式（*）
@@ -73,19 +74,39 @@
             function actionFormatter(value, row, index) {
                 var id = value;
                 var result = "";
-                result += "<button class='form-item1'>投递简历</button>";
+                result += "<button id='addInterview' class='form-item1'><a  href='/Visitor/addInterview'>投递简历</a></button>";
                 return result;
             }
-        })
+        })*/
     </script>
 </head>
 <body>
 <jsp:include page="/visitorModel.jsp"></jsp:include>
 <br><br>
 <h1 align="center" style="color: white">招聘信息</h1>
-<div class="dowebok">
-<table id="tb1">
-
+<div class="dowebok" style="background-color: white">
+<table id="tb1" class="table" >
+    <br>
+    <form>
+        <tr>
+            <td>公司名称</td>
+            <td>地址</td>
+            <td>部门</td>
+            <td>职位</td>
+            <td>薪资</td>
+            <td>操作</td>
+        </tr>
+        <c:forEach items="${requestScope.recruit}" var="recruit">
+            <tr>
+                <td>${recruit.name}</td>
+                <td>${recruit.address}</td>
+                <td>${recruit.dept}</td>
+                <td>${recruit.position}</td>
+                <td>${recruit.salary}</td>
+                <td><a href="/Visitor/addInterview?recruitID=${recruit.id}&name=${recruit.name}">投递简历</a></td>
+            </tr>
+        </c:forEach>
+    </form>
 </table>
 
 </div>

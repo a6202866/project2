@@ -1,19 +1,19 @@
 package com.lxd.project2.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.lxd.project2.entity.Dept;
-import com.lxd.project2.entity.Position;
-import com.lxd.project2.entity.Recruit;
-import com.lxd.project2.service.IDeptService;
-import com.lxd.project2.service.IPositionService;
-import com.lxd.project2.service.IRecruitService;
-import com.lxd.project2.service.IVisitorService;
+import com.lxd.project2.entity.*;
+import com.lxd.project2.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,6 +30,14 @@ public class ManagerController {
     private IPositionService iPositionService;
     @Autowired
     private IRecruitService iRecruitService;
+    @Autowired
+    private IInterviewService iInterviewService;
+    @Autowired
+    private IResumeService iResumeService;
+    @Autowired
+    private IInformService iInformService;
+    @Autowired
+    private IIDService iidService;
     @RequestMapping("manager1")
     public String manager1(HttpServletRequest request){
         List<Dept> depts = iDeptService.queryAll();
@@ -57,8 +65,41 @@ public class ManagerController {
         return "manager/manager";
     }
     @RequestMapping("manager2")
-    public String manager2(){
+    public String manager2(HttpSession session){
+        List<Interview> list = iInterviewService.queryAll();
+
+        session.setAttribute("interview",list);
         return "manager/manager2";
+    }
+    @RequestMapping("lookInterview")
+    public String lookInterview(String username,HttpSession session,int interviewID){
+        iInterviewService.update(username);
+        System.out.println("我的"+username);
+        List<Interview> list = iInterviewService.queryAll();
+        session.setAttribute("interview",list);
+        Resume resume = iResumeService.queryByUserName(username);
+        System.out.println("我的"+resume);
+        session.setAttribute("resume",resume);
+        session.setAttribute("interviewID",interviewID);
+        return "manager/managerSee";
+    }
+    @RequestMapping("deleteInterview")
+    public String deleteInterview(String username,HttpSession session){
+        iInterviewService.deleteByName(username);
+        List<Interview> list = iInterviewService.queryAll();
+        session.setAttribute("interview",list);
+        return "manager/manager2";
+    }
+    @RequestMapping("sendInterview")
+    public String sendInterview(int resumeID, int interviewID, java.sql.Date idate, Dept dept, Position position){
+        IID iid = new IID();
+        iid.setResumeID(resumeID);
+        iid.setInterviewID(interviewID);
+        IID iid1 = iidService.queryByRID(iid);
+        Recruit recruit = iRecruitService.queryByID(iid1.getRecruitID());
+        Inform inform = new Inform(recruit.getName(),recruit.getAddress(),recruit.getPosition(),idate);
+        iInformService.add(inform);
+        return "manager/managerSee";
     }
     @RequestMapping("manager3")
     public String manager3(){

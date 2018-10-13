@@ -10,4 +10,5 @@ import java.util.List;
 public interface IRecruitService {
     void add(Recruit recruit);
     public List<Recruit> queryAll();
+    Recruit queryByID(int id);
 }

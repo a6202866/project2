@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lxd.project2.dao.IInterviewDao">
+    <insert id="add" parameterType="Resume">
+        insert into interview (name,username,date,look,interview) VALUES
+        (#{name},#{username},#{date},'未查看','未面试');
+    </insert>
+    <select id="queryAll" resultType="Interview">
+        select * from interview;
+    </select>
+    <select id="queryByName" parameterType="String" resultType="InterView">
+        SELECT  * from interview WHERE username = #{username};
+    </select>
+    <delete id="deleteByName" parameterType="String">
+        DELETE from interview where username = #{username};
+    </delete>
+    <update id="update" parameterType="String">
+        UPDATE interview set look = '已查看' WHERE  username = #{username};
+    </update>
+</mapper>

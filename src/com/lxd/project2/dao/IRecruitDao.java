@@ -12,4 +12,5 @@ import java.util.List;
 public interface IRecruitDao {
     public void add(Recruit recruit);
     public List<Recruit> queryAll();
+    Recruit queryByID(int id);
 }

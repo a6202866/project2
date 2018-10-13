@@ -26,4 +26,9 @@ public class RecruitServiceImpl implements IRecruitService {
     public List<Recruit> queryAll() {
         return iRecruitDao.queryAll();
     }
+
+    @Override
+    public Recruit queryByID(int id) {
+        return iRecruitDao.queryByID(id);
+    }
 }
