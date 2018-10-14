@@ -21,7 +21,7 @@
         .f2{ font-size: 20px; line-height: 1.4; color: #fff;}
         .fp1 { width: 288px; height: 48px; padding-left: 70px; border: 1px solid #fff; border-radius: 25px; font-size: 18px; color: #fff; background-color: transparent; outline: none;}
         .fp2 { width: 688px; height: 48px; padding-left: 70px; border: 1px solid #fff; border-radius: 25px; font-size: 18px; color: #fff; background-color: transparent; outline: none;}
-        .form-item1 { width: 200px; height: 60px; border: 0; border-radius: 25px; font-size: 18px; color: #1f6f4a; outline: none; cursor: pointer; background-color: #fff; }
+        .form-item1 { width: 200px; height: 60px; border: 0; border-radius: 25px; font-size: 28px; color: #1f6f4a; outline: none; cursor: pointer; background-color: #fff; }
 
     </style>
 
@@ -31,8 +31,20 @@
     <script>
         $(function () {
             $("#l2").addClass('active');
-            $("#but1").onclick(function () {
-                alert("预约成功！");
+            $("#but1").click(function () {
+                var x = new Date();
+                var y = $("#date1").val();
+                var cha = (Date.parse(x) - Date.parse(y)) / 86400000 * 24;
+                if (cha > 0) {
+                    alert("不能选择今天以前的时间");
+                    return false;
+                }
+                else {
+                    alert("预约成功！");
+                }
+            })
+            $("#but2").click(function () {
+                alert("录取成功！")
             })
         })
     </script>
@@ -46,7 +58,7 @@
             <br>
                 <input type="number" name="interviewID" value="${sessionScope.interviewID}" hidden>
                 <input type="number" name="resumeID" value="${sessionScope.resume.id}" hidden>
-                <input type="text" value="${sessionScope.user.name}" name="username" hidden>
+                <input type="text" value="${sessionScope.user.name}" name="username" hidden >
                 <tr>
                     <td class="f1"><span>姓名:</span></td>
                     <td><input class="fp1" type="text" value="${sessionScope.resume.name}" name="name" disabled></td>
@@ -82,12 +94,12 @@
                 </tr>
             <tr>
                 <td class="f2"><span><br>面试日期:<br><br></span></td>
-                <td align="center"><input name="idate" type="date"></td>
+                <td align="center"><input class="fp1" id="date1" name="idate" type="date"></td>
                 <td colspan="2" align="center"><button id="but1" class="form-item1" type="submit">面试</button>&nbsp;&nbsp;&nbsp;</td>
             </tr>
             <tr>
-                <td colspan="2" align="center"><br><button class="form-item1" ><a href="/Visitor/visitor">录取</a></button><br>&nbsp;&nbsp;&nbsp;</td>
-                <td colspan="2" align="center"><br><button class="form-item1" ><a href="/Manager/manager">返回</a></button><br>&nbsp;&nbsp;&nbsp;</td>
+                <td colspan="2" align="center"><br><button  type="button" id="but2" class="form-item1" ><a href="/Manager/admin?interviewID=${sessionScope.interviewID}">录取</a></button><br>&nbsp;&nbsp;&nbsp;</td>
+                <td colspan="2" align="center"><br><button type="button" class="form-item1" ><a href="/Manager/manager2">返回</a></button><br>&nbsp;&nbsp;&nbsp;</td>
             </tr>
         </table>
 

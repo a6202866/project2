@@ -16,4 +16,6 @@ public interface IInterviewDao {
     public Interview queryByName(String name);
     public void deleteByName(String name);
     public void update(String name);
+    public void updatein(int id);
+    Interview queryByID(int id);
 }

@@ -1,3 +1,5 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.lxd.project2.entity.Inform" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -29,6 +31,10 @@
 
         $(function () {
             $("#l1").removeClass();
+            <%List<Inform> list= (List<Inform>) session.getAttribute("finforms");
+if (list.size()>0){
+    %>alert("你有未读面试消息，请在反馈中查看")<%
+}%>
         })
        /* $(function () {
             $('#tb1').bootstrapTable({
@@ -83,6 +89,7 @@
 <body>
 <jsp:include page="/visitorModel.jsp"></jsp:include>
 <br><br>
+
 <h1 align="center" style="color: white">招聘信息</h1>
 <div class="dowebok" style="background-color: white">
 <table id="tb1" class="table" >

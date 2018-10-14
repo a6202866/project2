@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2018/10/13 0013.
  */
@@ -18,5 +20,15 @@ public class InformServiceImpl implements IInformService {
     @Override
     public void add(Inform inform) {
         informDao.add(inform);
+    }
+
+    @Override
+    public List<Inform> queryAll() {
+        return informDao.queryAll();
+    }
+
+    @Override
+    public void update() {
+        informDao.update();
     }
 }

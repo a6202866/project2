@@ -38,6 +38,9 @@ public class ManagerController {
     private IInformService iInformService;
     @Autowired
     private IIDService iidService;
+    /*
+    跳转到界面1
+     */
     @RequestMapping("manager1")
     public String manager1(HttpServletRequest request){
         List<Dept> depts = iDeptService.queryAll();
@@ -46,6 +49,9 @@ public class ManagerController {
         request.setAttribute("position",positions);
         return "manager/manager1";
     }
+    /*
+    通过部门找职位
+     */
     @RequestMapping(value="findByDept", produces = "application/json; charset=utf-8")
     @ResponseBody
     public String findByDept(String dept){
@@ -53,17 +59,24 @@ public class ManagerController {
         String  json = JSON.toJSONString(list);
         return json;
     }
-
+/*
+    添加招聘
+ */
     @RequestMapping("zp")
     public String zp(Recruit recruit){
         iRecruitService.add(recruit);
         return "manager/manager1";
     }
-
+    /*
+    跳转默认界面
+     */
     @RequestMapping("manager")
     public String manager(){
         return "manager/manager";
     }
+    /*
+    跳转界面2
+     */
     @RequestMapping("manager2")
     public String manager2(HttpSession session){
         List<Interview> list = iInterviewService.queryAll();
@@ -71,18 +84,26 @@ public class ManagerController {
         session.setAttribute("interview",list);
         return "manager/manager2";
     }
+    /*
+    查看简历
+     */
     @RequestMapping("lookInterview")
     public String lookInterview(String username,HttpSession session,int interviewID){
         iInterviewService.update(username);
-        System.out.println("我的"+username);
         List<Interview> list = iInterviewService.queryAll();
         session.setAttribute("interview",list);
         Resume resume = iResumeService.queryByUserName(username);
-        System.out.println("我的"+resume);
         session.setAttribute("resume",resume);
         session.setAttribute("interviewID",interviewID);
         return "manager/managerSee";
     }
+
+    /**
+     * 删除简历
+     * @param username
+     * @param session
+     * @return
+     */
     @RequestMapping("deleteInterview")
     public String deleteInterview(String username,HttpSession session){
         iInterviewService.deleteByName(username);
@@ -90,8 +111,19 @@ public class ManagerController {
         session.setAttribute("interview",list);
         return "manager/manager2";
     }
+
+    /**
+     * 发送简历
+     * @param resumeID
+     * @param interviewID
+     * @param idate
+     * @param dept
+     * @param position
+     * @return
+     */
     @RequestMapping("sendInterview")
     public String sendInterview(int resumeID, int interviewID, java.sql.Date idate, Dept dept, Position position){
+        iInterviewService.updatein(interviewID);
         IID iid = new IID();
         iid.setResumeID(resumeID);
         iid.setInterviewID(interviewID);
@@ -99,28 +131,56 @@ public class ManagerController {
         Recruit recruit = iRecruitService.queryByID(iid1.getRecruitID());
         Inform inform = new Inform(recruit.getName(),recruit.getAddress(),recruit.getPosition(),idate);
         iInformService.add(inform);
+
         return "manager/managerSee";
     }
+    /*
+    录取
+     */
+    @RequestMapping("admin")
+    public String changeVisitorCls2(int interviewID){
+        Interview interview = iInterviewService.queryByID(interviewID);
+        iVisitorService.changeVisitorCls2(interview.getUsername());
+        return "manager/manager2";
+    }
+    /*
+    跳转界面3
+     */
     @RequestMapping("manager3")
     public String manager3(){
         return "manager/manager3";
     }
+    /*
+   跳转界面4
+    */
     @RequestMapping("manager4")
     public String manager4(){
         return "manager/manager4";
     }
+    /*
+    跳转界面5
+     */
     @RequestMapping("manager5")
     public String manager5(){
         return "manager/manager5";
     }
+    /*
+   跳转界面6
+    */
     @RequestMapping("manager6")
     public String manager6(){
         return "manager/manager6";
     }
+    /*
+   跳转界面7
+    */
     @RequestMapping("manager7")
     public String manager7(){
         return "manager/manager7";
     }
+    /*
+   跳转界面8
+    */
     @RequestMapping("manager8")
     public String manager8(){
         return "manager/manager8";

@@ -13,4 +13,7 @@
     <update id="changePassword" parameterType="Visitor">
         update visitors set password = #{password} where name = #{name};
     </update>
+    <update id="changeVisitorCls2" parameterType="String">
+        UPDATE visitors set cls = '2' where name = #{name};
+    </update>
 </mapper>

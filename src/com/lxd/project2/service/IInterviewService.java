@@ -14,4 +14,6 @@ public interface IInterviewService {
     public Interview queryByName(String username);
     public void deleteByName(String username);
     public void update(String username);
+    public void updatein(int id);
+    Interview queryByID(int id);
 }

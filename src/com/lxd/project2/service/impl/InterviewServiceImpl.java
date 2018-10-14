@@ -42,4 +42,14 @@ public class InterviewServiceImpl implements IInterviewService {
     public void update(String username) {
         iInterviewDao.update(username);
     }
+
+    @Override
+    public void updatein(int id) {
+        iInterviewDao.updatein(id);
+    }
+
+    @Override
+    public Interview queryByID(int id) {
+        return iInterviewDao.queryByID(id);
+    }
 }

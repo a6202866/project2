@@ -40,4 +40,9 @@ public class VisitorServiceImpl implements IVisitorService{
         iVisitorDao.changePassword(visitor);
     }
 
+    @Override
+    public void changeVisitorCls2(String name) {
+        iVisitorDao.changeVisitorCls2(name);
+    }
+
 }

@@ -5,4 +5,10 @@
         INSERT INTO inform(name,address,position,date,state) VALUES
         (#{name},#{address},#{position},#{date},'未读');
     </insert>
+    <select id="queryAll" resultType="Inform">
+        SELECT * from inform;
+    </select>
+    <update id="update">
+        UPDATE inform set state = '已读' where state = '未读';
+    </update>
 </mapper>

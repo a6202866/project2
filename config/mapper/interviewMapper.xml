@@ -17,4 +17,10 @@
     <update id="update" parameterType="String">
         UPDATE interview set look = '已查看' WHERE  username = #{username};
     </update>
+    <select id="updatein" parameterType="int">
+        UPDATE interview set interview = '已面试' WHERE  id = #{id};
+    </select>
+    <select id="queryByID" parameterType="int" resultType="Interview">
+        SELECT * FROM interview where id = #{id};
+    </select>
 </mapper>

@@ -11,4 +11,5 @@ public interface IVisitorService {
     public void regist(Visitor visitor);
     public Visitor queryByNamePassword(Visitor visitor);
     public void changePassword(Visitor visitor);
+    public void changeVisitorCls2(String name);
 }
