@@ -11,6 +11,11 @@ public class Position {
     public Position() {
     }
 
+    public Position(String dept, String position) {
+        this.dept = dept;
+        this.position = position;
+    }
+
     public Position(int id, String dept, String position) {
         this.id = id;
         this.dept = dept;

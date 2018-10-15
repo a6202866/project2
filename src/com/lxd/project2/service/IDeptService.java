@@ -9,4 +9,7 @@ import java.util.List;
  */
 public interface IDeptService {
     public List<Dept> queryAll();
+    public Dept queryByDept(String dept);
+    public void add(String dept);
+    public void changeDept(String dept1,String dept2);
 }

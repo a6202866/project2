@@ -1,6 +1,7 @@
 package com.lxd.project2.dao;
 
 import com.lxd.project2.entity.Position;
+import javafx.geometry.Pos;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,4 +13,5 @@ import java.util.List;
 public interface IPositionDao {
     public List<Position> queryAll();
     public List<Position> queryByDept(String dept);
+
 }

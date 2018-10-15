@@ -11,4 +11,7 @@ import java.util.List;
 @Repository
 public interface IDeptDao {
     public List<Dept> queryAll();
+    public Dept queryByDept(String dept);
+    public void add(String dept);
+    public void changeDept(String dept1,String dept2);
 }

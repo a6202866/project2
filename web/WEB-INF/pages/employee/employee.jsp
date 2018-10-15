@@ -18,7 +18,7 @@
 
     </style>
 </head>
-
+<jsp:include page="/employeeModel.jsp"></jsp:include>
 <body>
 
 </body>

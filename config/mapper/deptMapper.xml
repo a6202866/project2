@@ -4,4 +4,13 @@
     <select id="queryAll" resultType="Dept">
         SELECT * from dept;
     </select>
+    <insert id="add" parameterType="String">
+        INSERT into dept(dept) VALUES (#{dept});
+    </insert>
+    <select id="queryByDept" parameterType="String">
+        select * from dept where dept=#{dept};
+    </select>
+    <update id="changeDept" parameterType="String">
+        UPDATE dept set dept = #{0} where dept=#{1};
+    </update>
 </mapper>

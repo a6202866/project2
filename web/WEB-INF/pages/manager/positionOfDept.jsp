@@ -34,20 +34,20 @@
 </head>
 <body>
     <jsp:include page="/managerModel.jsp"></jsp:include>
-    <h1 align="center" style="color: palevioletred">管理部门</h1>
+    <h1 align="center" style="color: palevioletred">管理部门职位</h1>
     <div id="t2" class="dowebok" style="background-color: white">
         <form action="/Manager/sendInterview">
             <table class="table table-hover" style="border: whitesmoke" border="1px" cellspacing="10px" cellpadding="10px" >
                 <tr>
-                    <td align="center">部门</td>
-                    <td align="center">操作 <a href="/Manager/addUpdateDept" class="nav navbar-nav navbar-right">增加部门 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+                    <td align="center">职位</td>
+                    <td align="center">操作 <a href="/Manager/addUpdatePosition?dept=${sessionScope.dept1}" class="nav navbar-nav navbar-right">增加职位 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
                 </tr>
-                <c:forEach items="${sessionScope.dept}" var="dept">
+                <c:forEach items="${sessionScope.positionOfDept}" var="position">
                     <tr>
-                        <td align="center"><a href="deptDetail?dept=${dept.dept}">${dept.dept}</a></td>
+                        <td align="center"><a href="deptDetail?position=${position.position}&dept=${sessionScope.dept1}">${position.position}</a></td>
                         <td align="center">
-                            <a href="/Manager/addUpdateDept?dept=${dept.dept}">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="/Manager/deleteDept?dept=${dept.dept}">删除</a>
+                            <a href="/Manager/addUpdateDept?position=${position.position}&id=${position.id}">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="/Manager/deleteDept?position=${position.position}&id=${position.id}">删除</a>
                         </td>
                     </tr>
                 </c:forEach>

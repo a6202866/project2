@@ -147,8 +147,48 @@ public class ManagerController {
     跳转界面3
      */
     @RequestMapping("manager3")
-    public String manager3(){
+    public String manager3(HttpSession session){
+        List<Dept> depts = iDeptService.queryAll();
+        List<Position> positions = iPositionService.queryAll();
+        session.setAttribute("dept",depts);
+        session.setAttribute("position",positions);
         return "manager/manager3";
+    }
+    @RequestMapping("addUpdateDept")
+    public String addUpdateDept(String dept,HttpSession session){
+        if(dept==null){
+            return "manager/addUpdateDept";
+        }
+        session.setAttribute("updateDept",dept);
+        return "manager/addUpdateDept";
+    }
+    @RequestMapping("addUpdateDepting")
+    public String addUpdateDepting(HttpSession session,String dept){
+        String dept2 = (String) session.getAttribute("updateDept");
+        if(dept2==null||dept2.equals("")){
+            iDeptService.add(dept);
+        }else {
+            iDeptService.changeDept(dept,dept2);
+        }
+        List<Dept> depts = iDeptService.queryAll();
+        session.setAttribute("dept",depts);
+        session.setAttribute("updateDept","");
+        return "manager/manager3";
+    }
+    @RequestMapping("deptDetail")
+    public String deptDetail(String dept,HttpSession session){
+        List<Position> list = iPositionService.queryByDept(dept);
+        session.setAttribute("positionOfDept",list);
+        session.setAttribute("dept1",dept);
+        return "positionOfDept";
+    }
+    @RequestMapping("addUpdatePosition")
+    public String addUpdatePosition(HttpSession session,String position){
+        if(position==null){
+            return "manager/addUpdateDept";
+        }
+        session.setAttribute("updatePositon",position);
+        return "manager/addUpdatePosition";
     }
     /*
    跳转界面4
