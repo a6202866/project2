@@ -39,9 +39,11 @@
         <form action="/Manager/addUpdatePositioning">
             &nbsp; <span style="color:white;font-size: x-large">请输入部门职位:</span>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <input  class="fp1" type="text" name="dept" value="${sessionScope.updateDept}">
+            <input type="text" name="id" value="${sessionScope.updatePositon.id}" hidden>
+            <input type="text" name="dept" value="${sessionScope.dept1}" hidden>
+            <input  class="fp1" type="text" name="position" value="${sessionScope.updatePositon.position}">
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="form-item1" type="submit">提交</button>
+            <button class="form-item1" type="submit">修改</button>
         </form>
     </div>
 </body>

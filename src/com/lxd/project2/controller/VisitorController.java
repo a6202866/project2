@@ -88,7 +88,7 @@ public class VisitorController {
         session.setAttribute("user",visitor1);
         List<Recruit> list = iRecruitService.queryAll();
         request.setAttribute("recruit",list);
-        List<Inform> list1 =iInformService.queryAll();
+        List<Inform> list1 =iInformService.queryByUsername(visitor1.getName());
         session.setAttribute("informs",list1);
         List<Inform> list2 = new ArrayList<Inform>();
         for(Inform inform:list1){
@@ -161,7 +161,9 @@ public class VisitorController {
     @RequestMapping("visitor1")
     public String visitor1(HttpSession session){
         iInformService.update();
-        List<Inform> list1 =iInformService.queryAll();
+        Visitor visitor = (Visitor) session.getAttribute("user");
+        String username = visitor.getName();
+        List<Inform> list1 =iInformService.queryByUsername(username);
         session.setAttribute("informs",list1);
         List<Inform> list2 = new ArrayList<Inform>();
         for(Inform inform:list1){

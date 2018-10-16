@@ -31,4 +31,9 @@ public class InformServiceImpl implements IInformService {
     public void update() {
         informDao.update();
     }
+
+    @Override
+    public List<Inform> queryByUsername(String username) {
+       return informDao.queryByUsername(username);
+    }
 }

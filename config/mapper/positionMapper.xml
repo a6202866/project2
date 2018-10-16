@@ -7,4 +7,16 @@
     <select id="queryByDept" parameterType="String" resultType="Position">
         select * from position where dept = #{dept};
     </select>
+    <insert id="add" parameterType="Position">
+        insert into position (dept,position,date) values (#{dept},#{position},#{date});
+    </insert>
+    <update id="changePosition" parameterType="Position">
+        UPDATE position set position = #{position} where id = #{id};
+    </update>
+    <delete id="deletePosition" parameterType="Position">
+        DELETE FROM position where id = #{id};
+    </delete>
+    <update id="changeP" parameterType="String">
+        UPDATE position set dept = #{0} where dept=${1};
+    </update>
 </mapper>

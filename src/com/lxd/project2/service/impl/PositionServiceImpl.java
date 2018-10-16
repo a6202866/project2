@@ -26,4 +26,25 @@ public class PositionServiceImpl implements IPositionService{
     public List<Position> queryByDept(String dept) {
         return iPositionDao.queryByDept(dept);
     }
+
+    @Override
+    public void add(Position position) {
+        iPositionDao.add(position);
+    }
+
+    @Override
+    public void changePosition(Position position) {
+        iPositionDao.changePosition(position);
+    }
+
+    @Override
+    public void deletePosition(Position position) {
+        iPositionDao.deletePosition(position);
+    }
+
+    @Override
+    public void changeP(String dept, String dept1) {
+        iPositionDao.changeP(dept,dept1);
+    }
+
 }

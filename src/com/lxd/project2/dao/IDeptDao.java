@@ -12,6 +12,7 @@ import java.util.List;
 public interface IDeptDao {
     public List<Dept> queryAll();
     public Dept queryByDept(String dept);
-    public void add(String dept);
+    public void add(Dept dept);
     public void changeDept(String dept1,String dept2);
+    public void deleteByDept(String dept);
 }

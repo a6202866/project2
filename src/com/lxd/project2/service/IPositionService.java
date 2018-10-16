@@ -10,4 +10,8 @@ import java.util.List;
 public interface IPositionService {
     List<Position> queryAll();
     public List<Position> queryByDept(String dept);
+    public void add(Position position);
+    public void changePosition(Position position);
+    void deletePosition(Position position);
+    void changeP(String dept,String dept1);
 }

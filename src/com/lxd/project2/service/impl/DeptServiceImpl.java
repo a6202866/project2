@@ -28,12 +28,17 @@ public class DeptServiceImpl implements IDeptService{
     }
 
     @Override
-    public void add(String dept) {
+    public void add(Dept dept) {
         iDeptDao.add(dept);
     }
 
     @Override
     public void changeDept(String dept1,String dept2) {
         iDeptDao.changeDept(dept1,dept2);
+    }
+
+    @Override
+    public void deleteByDept(String dept) {
+        iDeptDao.deleteByDept(dept);
     }
 }

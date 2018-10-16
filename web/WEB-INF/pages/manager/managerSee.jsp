@@ -46,6 +46,9 @@
             $("#but2").click(function () {
                 alert("录取成功！")
             })
+            $("#date1").change(function () {
+                $("#but1").attr("disabled",false);
+            })
         })
     </script>
 </head>
@@ -95,10 +98,10 @@
             <tr>
                 <td class="f2"><span><br>面试日期:<br><br></span></td>
                 <td align="center"><input class="fp1" id="date1" name="idate" type="date"></td>
-                <td colspan="2" align="center"><button id="but1" class="form-item1" type="submit">面试</button>&nbsp;&nbsp;&nbsp;</td>
+                <td colspan="2" align="center"><button id="but1" class="form-item1" type="submit" disabled>面试</button>&nbsp;&nbsp;&nbsp;</td>
             </tr>
             <tr>
-                <td colspan="2" align="center"><br><button  type="button" id="but2" class="form-item1" ><a href="/Manager/admin?interviewID=${sessionScope.interviewID}">录取</a></button><br>&nbsp;&nbsp;&nbsp;</td>
+                <td colspan="2" align="center"><br><button  type="button" id="but2" class="form-item1" ><a href="/Manager/admin?interviewID=${sessionScope.interviewID}&resumeID=${sessionScope.resume.id}">录取</a></button><br>&nbsp;&nbsp;&nbsp;</td>
                 <td colspan="2" align="center"><br><button type="button" class="form-item1" ><a href="/Manager/manager2">返回</a></button><br>&nbsp;&nbsp;&nbsp;</td>
             </tr>
         </table>

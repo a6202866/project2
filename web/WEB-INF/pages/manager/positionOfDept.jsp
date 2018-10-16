@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -34,20 +35,23 @@
 </head>
 <body>
     <jsp:include page="/managerModel.jsp"></jsp:include>
-    <h1 align="center" style="color: palevioletred">管理部门职位</h1>
+    <h1 align="center" style="color: palevioletred">${sessionScope.dept1}</h1>
     <div id="t2" class="dowebok" style="background-color: white">
         <form action="/Manager/sendInterview">
             <table class="table table-hover" style="border: whitesmoke" border="1px" cellspacing="10px" cellpadding="10px" >
                 <tr>
                     <td align="center">职位</td>
+                    <td align="center">创建时间</td>
                     <td align="center">操作 <a href="/Manager/addUpdatePosition?dept=${sessionScope.dept1}" class="nav navbar-nav navbar-right">增加职位 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
                 </tr>
                 <c:forEach items="${sessionScope.positionOfDept}" var="position">
                     <tr>
-                        <td align="center"><a href="deptDetail?position=${position.position}&dept=${sessionScope.dept1}">${position.position}</a></td>
+                        <td align="center"><a>${position.position}</a></td>
+                        <td align="center"><fmt:formatDate value="${position.date}"  pattern="yyyy-MM-dd"></fmt:formatDate></td>
                         <td align="center">
-                            <a href="/Manager/addUpdateDept?position=${position.position}&id=${position.id}">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="/Manager/deleteDept?position=${position.position}&id=${position.id}">删除</a>
+                            <input type="text" value="${position.id}" hidden>
+                                <a href="/Manager/addUpdatePosition?position=${position.position}&id=${position.id}&dept=${sessionScope.dept1}">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="/Manager/deletePosition?position=${position.position}&id=${position.id}&dept=${sessionScope.dept1}">删除</a>
                         </td>
                     </tr>
                 </c:forEach>

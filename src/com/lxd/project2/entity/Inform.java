@@ -7,6 +7,7 @@ import java.util.Date;
  */
 public class Inform {
     private int id;
+    private String username;
     private String name;
     private String address;
     private String position;
@@ -16,8 +17,27 @@ public class Inform {
     public Inform() {
     }
 
+    public Inform(String username, String name, String address, String position, Date date, String state) {
+        this.username = username;
+        this.name = name;
+        this.address = address;
+        this.position = position;
+        this.date = date;
+        this.state = state;
+    }
+
     public Inform(int id, String name, String address, String position, Date date, String state) {
         this.id = id;
+        this.name = name;
+        this.address = address;
+        this.position = position;
+        this.date = date;
+        this.state = state;
+    }
+
+    public Inform(int id, String username, String name, String address, String position, Date date, String state) {
+        this.id = id;
+        this.username = username;
         this.name = name;
         this.address = address;
         this.position = position;
@@ -69,16 +89,33 @@ public class Inform {
         return state;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public String toString() {
         return "Inform{" +
                 "id=" + id +
+                ", username='" + username + '\'' +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", position='" + position + '\'' +
                 ", date=" + date +
                 ", state='" + state + '\'' +
                 '}';
+    }
+
+    public Inform(String username, String name, String address, String position, Date date) {
+        this.username = username;
+        this.name = name;
+        this.address = address;
+        this.position = position;
+        this.date = date;
     }
 
     public Inform(String name, String address, String position, Date date, String state) {

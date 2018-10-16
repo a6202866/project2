@@ -4,8 +4,8 @@
     <select id="queryAll" resultType="Dept">
         SELECT * from dept;
     </select>
-    <insert id="add" parameterType="String">
-        INSERT into dept(dept) VALUES (#{dept});
+    <insert id="add" parameterType="Dept">
+        INSERT into dept(dept,date) VALUES (#{dept},#{date});
     </insert>
     <select id="queryByDept" parameterType="String">
         select * from dept where dept=#{dept};
@@ -13,4 +13,7 @@
     <update id="changeDept" parameterType="String">
         UPDATE dept set dept = #{0} where dept=#{1};
     </update>
+    <delete id="deleteByDept" parameterType="String">
+        delete FROM dept where dept = #{dept};
+    </delete>
 </mapper>

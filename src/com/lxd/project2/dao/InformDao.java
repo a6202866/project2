@@ -13,4 +13,5 @@ public interface InformDao {
     void add(Inform inform);
     List<Inform> queryAll();
     void update();
+    List<Inform> queryByUsername(String username);
 }

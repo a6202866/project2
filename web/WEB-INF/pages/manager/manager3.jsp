@@ -1,4 +1,7 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.lxd.project2.entity.Position" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -7,6 +10,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 <html>
 <head>
     <title>管理员平台</title>
@@ -29,6 +33,19 @@
     <script>
         $(function () {
             $("#l3").addClass('active');
+
+            $(".del1").click(function () {
+                var x = $(this).attr("href");
+                x = x.substring(25,x.length);
+
+                var y = $("#deptall").val()
+
+                if(y.search(x)>0){
+                    alert("该部门还有职位未删除");
+                    return false;
+                }
+                alert("删除成功！");
+            })
         })
     </script>
 </head>
@@ -37,17 +54,21 @@
     <h1 align="center" style="color: palevioletred">管理部门</h1>
     <div id="t2" class="dowebok" style="background-color: white">
         <form action="/Manager/sendInterview">
+            <%List<Position> list = (List<Position>) session.getAttribute("position");%>
+            <input type="text" id="deptall" value="${sessionScope.position}" hidden>
             <table class="table table-hover" style="border: whitesmoke" border="1px" cellspacing="10px" cellpadding="10px" >
                 <tr>
                     <td align="center">部门</td>
+                    <td align="center">创立时间</td>
                     <td align="center">操作 <a href="/Manager/addUpdateDept" class="nav navbar-nav navbar-right">增加部门 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
                 </tr>
                 <c:forEach items="${sessionScope.dept}" var="dept">
                     <tr>
                         <td align="center"><a href="deptDetail?dept=${dept.dept}">${dept.dept}</a></td>
+                        <td align="center"><fmt:formatDate value="${dept.date}" pattern="yyyy-MM-dd"></fmt:formatDate></td>
                         <td align="center">
                             <a href="/Manager/addUpdateDept?dept=${dept.dept}">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="/Manager/deleteDept?dept=${dept.dept}">删除</a>
+                            <a class="del1" href="/Manager/deleteDept?dept=${dept.dept}">删除</a>
                         </td>
                     </tr>
                 </c:forEach>

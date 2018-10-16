@@ -4,15 +4,12 @@ import com.alibaba.fastjson.JSON;
 import com.lxd.project2.entity.*;
 import com.lxd.project2.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -38,6 +35,8 @@ public class ManagerController {
     private IInformService iInformService;
     @Autowired
     private IIDService iidService;
+    @Autowired
+    private IEmployeeService iEmployeeService;
     /*
     跳转到界面1
      */
@@ -113,7 +112,7 @@ public class ManagerController {
     }
 
     /**
-     * 发送简历
+     * 面试
      * @param resumeID
      * @param interviewID
      * @param idate
@@ -128,8 +127,9 @@ public class ManagerController {
         iid.setResumeID(resumeID);
         iid.setInterviewID(interviewID);
         IID iid1 = iidService.queryByRID(iid);
+        String username = iInterviewService.queryByID(interviewID).getUsername();
         Recruit recruit = iRecruitService.queryByID(iid1.getRecruitID());
-        Inform inform = new Inform(recruit.getName(),recruit.getAddress(),recruit.getPosition(),idate);
+        Inform inform = new Inform(username,recruit.getName(),recruit.getAddress(),recruit.getPosition(),idate);
         iInformService.add(inform);
 
         return "manager/managerSee";
@@ -138,9 +138,19 @@ public class ManagerController {
     录取
      */
     @RequestMapping("admin")
-    public String changeVisitorCls2(int interviewID){
+    public String changeVisitorCls2(int interviewID,int resumeID){
         Interview interview = iInterviewService.queryByID(interviewID);
+        IID iid =new IID();
+        iid.setInterviewID(interviewID);
+        iid.setResumeID(resumeID);
+        IID iid1 = iidService.queryByRID(iid);
+        Recruit recruit = iRecruitService.queryByID(iid1.getRecruitID());
         iVisitorService.changeVisitorCls2(interview.getUsername());
+        Resume resume = iResumeService.queryByUserName(interview.getUsername());
+        Employee employee = new Employee(resume.getUsername(),resume.getName(),
+                resume.getSex(),resume.getAge(),resume.getSchool(),resume.getPnumber(),
+                resume.getEmail(),new Date(),recruit.getDept(),recruit.getPosition());
+        iEmployeeService.add(employee);
         return "manager/manager2";
     }
     /*
@@ -165,14 +175,25 @@ public class ManagerController {
     @RequestMapping("addUpdateDepting")
     public String addUpdateDepting(HttpSession session,String dept){
         String dept2 = (String) session.getAttribute("updateDept");
+        Dept dept1 = new Dept(dept,new Date());
         if(dept2==null||dept2.equals("")){
-            iDeptService.add(dept);
+            iDeptService.add(dept1);
         }else {
             iDeptService.changeDept(dept,dept2);
+            iPositionService.changeP(dept,dept2);
         }
+        List<Position> positions = iPositionService.queryAll();
         List<Dept> depts = iDeptService.queryAll();
+        session.setAttribute("position",positions);
         session.setAttribute("dept",depts);
         session.setAttribute("updateDept","");
+        return "manager/manager3";
+    }
+    @RequestMapping("deleteDept")
+    public String deleteDept(String dept,HttpSession session){
+        iDeptService.deleteByDept(dept);
+        List<Dept> depts = iDeptService.queryAll();
+        session.setAttribute("dept",depts);
         return "manager/manager3";
     }
     @RequestMapping("deptDetail")
@@ -180,15 +201,40 @@ public class ManagerController {
         List<Position> list = iPositionService.queryByDept(dept);
         session.setAttribute("positionOfDept",list);
         session.setAttribute("dept1",dept);
-        return "positionOfDept";
+        return "manager/positionOfDept";
     }
     @RequestMapping("addUpdatePosition")
-    public String addUpdatePosition(HttpSession session,String position){
-        if(position==null){
-            return "manager/addUpdateDept";
+    public String addUpdatePosition(HttpSession session,String position,Position position1){
+        if(position==null||position.equals("")){
+            return "manager/addPosition";
+
         }
-        session.setAttribute("updatePositon",position);
-        return "manager/addUpdatePosition";
+        /*Position position1 = new Position(id,dept,position);*/
+        session.setAttribute("updatePositon",position1);
+        return "manager/UpdatePosition";
+    }
+    @RequestMapping("addUpdatePositioning")
+    public String addUpdatePositioning(Position position,HttpSession session){
+            iPositionService.changePosition(position);
+        List<Position> list = iPositionService.queryByDept(position.getDept());
+        session.setAttribute("positionOfDept",list);
+        return "manager/positionOfDept";
+    }
+    @RequestMapping("addPosition")
+    public String addPosition(String dept,String position,HttpSession session){
+        Position position1 = new Position(dept,position,new Date());
+
+        iPositionService.add(position1);
+        List<Position> list = iPositionService.queryByDept(position1.getDept());
+        session.setAttribute("positionOfDept",list);
+        return "manager/positionOfDept";
+    }
+    @RequestMapping("deletePosition")
+    public String deletePosition(Position position,HttpSession session){
+        iPositionService.deletePosition(position);
+        List<Position> list = iPositionService.queryByDept(position.getDept());
+        session.setAttribute("positionOfDept",list);
+        return "manager/positionOfDept";
     }
     /*
    跳转界面4

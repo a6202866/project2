@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lxd.project2.dao.InformDao">
     <insert id="add" parameterType="Inform">
-        INSERT INTO inform(name,address,position,date,state) VALUES
-        (#{name},#{address},#{position},#{date},'未读');
+        INSERT INTO inform(username,name,address,position,date,state) VALUES
+        (#{username},#{name},#{address},#{position},#{date},'未读');
     </insert>
     <select id="queryAll" resultType="Inform">
         SELECT * from inform;
@@ -11,4 +11,7 @@
     <update id="update">
         UPDATE inform set state = '已读' where state = '未读';
     </update>
+    <select id="queryByUsername" parameterType="String" resultType="Inform">
+        SELECT * from inform where username = #{username};
+    </select>
 </mapper>
