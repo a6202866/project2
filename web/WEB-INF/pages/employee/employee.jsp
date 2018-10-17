@@ -17,7 +17,21 @@
         .logo { width: 104px; height: 104px; margin: 50px auto 80px; background: url(/images/login.png) 0 0 no-repeat; }
 
     </style>
+    <link href="/js/bootstrap.min.css" rel="stylesheet">
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap-table.js"></script>
+<script>
+    $(function () {
+        if("true"==$("#TrainInterview").val()){
+            alert("您有培训通知，请查看!")
+        }else {
+
+        }
+    })
+
+</script>
 </head>
+<input id="TrainInterview" type="text" value="${sessionScope.TrainInterview}" hidden>
 <jsp:include page="/employeeModel.jsp"></jsp:include>
 <body>
 

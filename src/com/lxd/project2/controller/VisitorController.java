@@ -42,7 +42,10 @@ public class VisitorController {
     private IIDService iidService;
     @Autowired
     private IInformService iInformService;
-
+    @Autowired
+    private IEmployeeService iEmployeeService;
+    @Autowired
+    private ITrainService iTrainService;
     /**
      * 注册，通过名字查找
      * @param name
@@ -83,13 +86,21 @@ public class VisitorController {
     登录
      */
     @RequestMapping(value = "login")
-    public String login(Visitor visitor, HttpSession session,HttpServletRequest request){
+    public String login(Visitor visitor, HttpSession session){
         Visitor visitor1 = iVisitorService.queryByNamePassword(visitor);
         session.setAttribute("user",visitor1);
         List<Recruit> list = iRecruitService.queryAll();
-        request.setAttribute("recruit",list);
+        session.setAttribute("recruit",list);
         List<Inform> list1 =iInformService.queryByUsername(visitor1.getName());
+        List<Dept> list3 = iDeptService.queryAll();
+        session.setAttribute("dept",list3);
+        List<Position> list4 = iPositionService.queryAll();
+        session.setAttribute("position",list4);
         session.setAttribute("informs",list1);
+        List<Employee> list5 = iEmployeeService.queryAll();
+        session.setAttribute("employeeAll",list5);
+        Employee employee = iEmployeeService.queryByUsername(visitor.getName());
+        session.setAttribute("employeeDetail",employee);
         List<Inform> list2 = new ArrayList<Inform>();
         for(Inform inform:list1){
             if(inform.getState().equals("未读")){
@@ -100,8 +111,16 @@ public class VisitorController {
         if(visitor1.getCls()==0){
             return "manager/manager";
         }else if(visitor1.getCls()==1){
+
             return "visitor/visitor";
         }else{
+            List<Train> list6 = iTrainService.queryByDept(employee.getDept());
+            session.setAttribute("TInterview",list6);
+            if(list6.size()>0||list!=null){
+                session.setAttribute("TrainInterview","true");
+            }else {
+                session.setAttribute("TrainInterview","false");
+            }
             return "employee/employee";
         }
     }
@@ -128,13 +147,20 @@ public class VisitorController {
         session.setAttribute("user",visitor1);
         return "visitor/visitor";
     }
+    @RequestMapping("changePassword1")
+    public String changePassword1(Visitor visitor,HttpSession session){
+        iVisitorService.changePassword(visitor);
+        Visitor visitor1 = iVisitorService.queryByNamePassword(visitor);
+        session.setAttribute("user",visitor1);
+        return "employee/employee";
+    }
 /*
 跳转默认界面
  */
     @RequestMapping("visitor")
-    public String visitor(HttpServletRequest request){
+    public String visitor(HttpSession session){
         List<Recruit> list = iRecruitService.queryAll();
-        request.setAttribute("recruit",list);
+        session.setAttribute("recruit",list);
         return "visitor/visitor";
     }
     /*
@@ -145,7 +171,7 @@ public class VisitorController {
         Visitor visitor = (Visitor) session.getAttribute("user");
 
         if(iInterviewService.queryByName(visitor.getName())!=null){
-            return "redirect:/visitor/visitor";
+            return "visitor/visitor";
         }
         Resume resume = iResumeService.queryByUserName(visitor.getName());
         resume.setDate(new Date());
@@ -153,7 +179,7 @@ public class VisitorController {
         Interview interview = iInterviewService.queryByName(resume.getUsername());
         IID iid = new IID(resume.getId(),recruitID,interview.getId());
         iidService.add(iid);
-        return "redirect:/visitor/visitor";
+        return "visitor/visitor";
     }
     /*
     跳转界面1

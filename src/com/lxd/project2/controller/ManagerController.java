@@ -4,12 +4,20 @@ import com.alibaba.fastjson.JSON;
 import com.lxd.project2.entity.*;
 import com.lxd.project2.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -37,6 +45,8 @@ public class ManagerController {
     private IIDService iidService;
     @Autowired
     private IEmployeeService iEmployeeService;
+    @Autowired
+    private ITrainService iTrainService;
     /*
     跳转到界面1
      */
@@ -133,6 +143,30 @@ public class ManagerController {
         iInformService.add(inform);
 
         return "manager/managerSee";
+    }
+    @RequestMapping("changeEmployee")
+    public String changeEmployee(int id,HttpSession session){
+        Employee employee = iEmployeeService.queryByID(id);
+        session.setAttribute("changeEmployee",employee);
+        return "manager/ChangeEmployee";
+    }
+    @RequestMapping("changeEmp")
+    public String changeEmp(Employee employee,HttpSession session){
+        iEmployeeService.changeEmp(employee);
+        List<Employee> list = iEmployeeService.queryByState("在职员工");
+        List<Employee> list1 = iEmployeeService.queryByState("试用期");
+        session.setAttribute("zzyg",list);
+        session.setAttribute("syq",list1);
+        return "manager/manager5";
+    }
+    @RequestMapping("deleteEmployee")
+    public String deleteEmployee(int id,HttpSession session){
+        iEmployeeService.deleteById(id);
+        List<Employee> list = iEmployeeService.queryByState("在职员工");
+        List<Employee> list1 = iEmployeeService.queryByState("试用期");
+        session.setAttribute("zzyg",list);
+        session.setAttribute("syq",list1);
+        return "manager/manager5";
     }
     /*
     录取
@@ -240,14 +274,50 @@ public class ManagerController {
    跳转界面4
     */
     @RequestMapping("manager4")
-    public String manager4(){
+    public String manager4(HttpSession session){
+        List<Train> list = iTrainService.queryAll();
+        session.setAttribute("train",list);
+        return "manager/manager4";
+    }
+    @RequestMapping("addTrain")
+    public String addTrain(HttpSession session, String name, String dept, java.sql.Date date){
+        Train train = new Train();
+        train.setDept(dept);
+        train.setName(name);
+        train.setDate(date);
+        iTrainService.add(train);
+        List<Train> list = iTrainService.queryAll();
+        session.setAttribute("train",list);
+        return "manager/manager4";
+    }
+    @RequestMapping("delTrain")
+    public String delTrain(HttpSession session,int id){
+        iTrainService.delByID(id);
+        List<Train> list = iTrainService.queryAll();
+        session.setAttribute("train",list);
+        return "manager/manager4";
+    }
+    @RequestMapping("changeTrain")
+    public String changeTrain(HttpSession session, String name, String dept, java.sql.Date date,int id){
+        Train train = new Train();
+        train.setDept(dept);
+        train.setId(id);
+        train.setName(name);
+        train.setDate(date);
+        iTrainService.update(train);
+        List<Train> list = iTrainService.queryAll();
+        session.setAttribute("train",list);
         return "manager/manager4";
     }
     /*
     跳转界面5
      */
     @RequestMapping("manager5")
-    public String manager5(){
+    public String manager5(HttpSession session){
+        List<Employee> list = iEmployeeService.queryByState("在职员工");
+        List<Employee> list1 = iEmployeeService.queryByState("试用期");
+        session.setAttribute("zzyg",list);
+        session.setAttribute("syq",list1);
         return "manager/manager5";
     }
     /*
@@ -271,4 +341,5 @@ public class ManagerController {
     public String manager8(){
         return "manager/manager8";
     }
+
 }

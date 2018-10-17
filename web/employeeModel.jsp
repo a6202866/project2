@@ -24,7 +24,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/Manager/employee">主页</a>
+            <a class="navbar-brand" href="/Employee/employee">主页</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -35,7 +35,7 @@
                 <li id="l3"><a href="/Employee/employee3">修改密码</a></li>
                 <li id="l4"><a href="/Employee/employee4">我的奖惩</a></li>
                 <li id="l5"><a href="/Employee/employee5">部门职位</a></li>
-                <li id="l6"><a href="/Employee/employee6">其他</a></li>
+                <li id="l6"><a href="/Employee/employee6">培训学习</a></li>
                 <li id="l7"><a href="/Employee/employee7">我的薪资</a></li>
 
                 </li>

@@ -30,6 +30,18 @@
     <script>
         $(function () {
             $("#l3").addClass('active');
+            $(".delposition").click(function () {
+                var x =$(this).parents().parents().children()[0];
+                var y = $(x);
+                var z = y.children()[0].innerHTML;
+                var employeeAll = $("#employeeAll").val();
+                if(employeeAll.indexOf(z)>0){
+                    alert("该职位下还有员工，请确认无员工再删除")
+                    return false;
+                }else {
+                    alert("删除成功！")
+                }
+            })
         })
     </script>
 </head>
@@ -37,6 +49,7 @@
     <jsp:include page="/managerModel.jsp"></jsp:include>
     <h1 align="center" style="color: palevioletred">${sessionScope.dept1}</h1>
     <div id="t2" class="dowebok" style="background-color: white">
+        <input  id="employeeAll" type="text" value="${sessionScope.employeeAll}" hidden>
         <form action="/Manager/sendInterview">
             <table class="table table-hover" style="border: whitesmoke" border="1px" cellspacing="10px" cellpadding="10px" >
                 <tr>
@@ -51,7 +64,7 @@
                         <td align="center">
                             <input type="text" value="${position.id}" hidden>
                                 <a href="/Manager/addUpdatePosition?position=${position.position}&id=${position.id}&dept=${sessionScope.dept1}">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="/Manager/deletePosition?position=${position.position}&id=${position.id}&dept=${sessionScope.dept1}">删除</a>
+                            <a class="delposition" href="/Manager/deletePosition?position=${position.position}&id=${position.id}&dept=${sessionScope.dept1}">删除</a>
                         </td>
                     </tr>
                 </c:forEach>

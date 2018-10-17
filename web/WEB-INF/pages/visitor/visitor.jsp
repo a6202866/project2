@@ -35,6 +35,9 @@
 if (list.size()>0){
     %>alert("你有未读面试消息，请在反馈中查看")<%
 }%>
+            $("#postrecume").click(function () {
+                alert("投递简历成功！")
+            })
         })
        /* $(function () {
             $('#tb1').bootstrapTable({
@@ -84,6 +87,7 @@ if (list.size()>0){
                 return result;
             }
         })*/
+
     </script>
 </head>
 <body>
@@ -103,14 +107,14 @@ if (list.size()>0){
             <td>薪资</td>
             <td>操作</td>
         </tr>
-        <c:forEach items="${requestScope.recruit}" var="recruit">
+        <c:forEach items="${sessionScope.recruit}" var="recruit">
             <tr>
                 <td>${recruit.name}</td>
                 <td>${recruit.address}</td>
                 <td>${recruit.dept}</td>
                 <td>${recruit.position}</td>
                 <td>${recruit.salary}</td>
-                <td><a href="/Visitor/addInterview?recruitID=${recruit.id}&name=${recruit.name}">投递简历</a></td>
+                <td><a id="postrecume" href="/Visitor/addInterview?recruitID=${recruit.id}&name=${recruit.name}">投递简历</a></td>
             </tr>
         </c:forEach>
     </form>
