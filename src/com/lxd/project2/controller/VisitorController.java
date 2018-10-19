@@ -95,7 +95,7 @@ public class VisitorController {
         List<Dept> list3 = iDeptService.queryAll();
         session.setAttribute("dept",list3);
         List<Position> list4 = iPositionService.queryAll();
-        session.setAttribute("position",list4);
+        session.setAttribute("positions",list4);
         session.setAttribute("informs",list1);
         List<Employee> list5 = iEmployeeService.queryAll();
         session.setAttribute("employeeAll",list5);

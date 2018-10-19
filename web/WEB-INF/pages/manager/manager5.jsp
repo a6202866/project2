@@ -67,11 +67,11 @@
         <c:forEach items="${sessionScope.zzyg}" var="employee">
             <tr class="tb1">
                 <td align="center">${employee.id}</td>
-                <td align="center">${employee.name}</td>
+                <td align="center"><a href="/Manager/empDetail?id=${employee.id}">${employee.name}</a></td>
                 <td align="center">${employee.dept}</td>
                 <td align="center">${employee.position}</td>
                 <td align="center"><a href="/Manager/changeEmployee?id=${employee.id}">人事调动</a></td>
-                <td align="center"><a>考勤</a></td>
+                <td align="center"><a href="/Manager/seeCheck?username=${employee.username}">考勤</a></td>
                 <td align="center"><a>工资发放</a></td>
                 <td align="center"><a class="deleteEmp" href="/Manager/deleteEmployee?id=${employee.id}">开除</a></td>
             </tr>
@@ -80,11 +80,11 @@
             <c:forEach items="${sessionScope.syq}" var="employee">
                 <tr class="tb2" hidden>
                     <td align="center">${employee.id}</td>
-                    <td align="center">${employee.name}</td>
+                    <td align="center"><a href="/Manager/empDetail?id=${employee.id}">${employee.name}</a></td>
                     <td align="center">${employee.dept}</td>
                     <td align="center">${employee.position}</td>
                     <td align="center"><a href="/Manager/changeEmployee?id=${employee.id}">人事调动</a></td>
-                    <td align="center"><a>考勤</a></td>
+                    <td align="center"><a href="/Manager/seeCheck?username=${employee.username}">考勤</a></td>
                     <td align="center"><a>工资发放</a></td>
                     <td align="center"><a class="deleteEmp" href="/Manager/deleteEmployee?id=${employee.id}">开除</a></td>
                 </tr>

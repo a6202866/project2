@@ -13,6 +13,10 @@
     <script src="/js/jquery-1.10.2.min.js"></script>
     <script src="/js/bootstrap-table.js"></script>
 </head>
+<script src="/js/jquery-1.10.2.min.js"></script>
+<script>
+
+</script>
 <body>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -43,8 +47,8 @@
 
             <ul class="nav navbar-nav navbar-right">
 
-                <li id="l8"><a href="/Employee/employee8">上班签到</a></li>
-                <li id="l9"><a href="/Employee/employee9">下班签到</a></li>
+                <li id="l8"><a id="a1" href="/Employee/addOnDuty">上班签到</a></li>
+                <li id="l9"><a id="a2" href="/Employee/addOffDuty">下班签到</a></li>
                 <li id="l0"><a href="#">退出</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->

@@ -61,7 +61,7 @@
                             $("#sel4 option").remove();
                             $("#sel4").append("<option>请选择</option>");
                             for(var i = 0;i<data.length;i++){
-                                $("#sel4").append("<option>"+data[i].position+"</option>")
+                                $("#sel4").append("<option >"+data[i].position+"</option>")
                             }
                         }
                     }
@@ -109,11 +109,14 @@
                 <td><select class="form-control" id="sel3" name="dept">
                     <option>--请选择--</option>
                     <c:forEach items="${requestScope.dept}" var="dept">
-                        <option>${dept.dept}</option>
+                        <option <c:if test="${dept.dept==sessionScope.resume.dept}">selected</c:if>>${dept.dept}</option>
                     </c:forEach>
                 </select>
                     <select id="sel4" class="form-control" name ="position" >
                         <option>--请选择--</option>
+                        <c:forEach items="${sessionScope.positions}" var="position">
+                            <option <c:if test="${position.position==sessionScope.resume.position}">selected</c:if>>${position.position}</option>
+                        </c:forEach>
                     </select></td>
                 <td class="f1"><span>期望薪资:</span></td>
                 <td><input class="fp1" type="text"value="${sessionScope.resume.salary}" name="salary"></td>

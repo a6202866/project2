@@ -60,7 +60,7 @@
             <select class="form-control" id="sel1" name="dept">
                 <option>--请选择--</option>
                 <c:forEach items="${sessionScope.dept}" var="dept" >
-                    <option>${dept.dept}</option>
+                    <option <c:if test="${dept.dept==sessionScope.changeEmployee.dept}">selected</c:if>>${dept.dept}</option>
                 </c:forEach>
             </select>
             <select class="form-control" id="sel2" name="position">

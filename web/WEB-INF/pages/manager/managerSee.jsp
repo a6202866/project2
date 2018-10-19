@@ -21,7 +21,8 @@
         .f2{ font-size: 20px; line-height: 1.4; color: #fff;}
         .fp1 { width: 288px; height: 48px; padding-left: 70px; border: 1px solid #fff; border-radius: 25px; font-size: 18px; color: #fff; background-color: transparent; outline: none;}
         .fp2 { width: 688px; height: 48px; padding-left: 70px; border: 1px solid #fff; border-radius: 25px; font-size: 18px; color: #fff; background-color: transparent; outline: none;}
-        .form-item1 { width: 200px; height: 60px; border: 0; border-radius: 25px; font-size: 28px; color: #1f6f4a; outline: none; cursor: pointer; background-color: #fff; }
+        .form-item1 { width: 200px; height: 50px; border: 0; border-radius: 25px; font-size: 28px; color: #1f6f4a; outline: none; cursor: pointer; background-color: #fff; }
+        .form-item2 { width: 150px; height: 50px; border: 0; border-radius: 10px; font-size: 22px; color: #1f6f4a; outline: none; cursor: pointer; background-color: #fff; }
 
     </style>
 
@@ -48,6 +49,9 @@
             })
             $("#date1").change(function () {
                 $("#but1").attr("disabled",false);
+            })
+            $("#basicSalary").change(function () {
+                $("#but2").attr("disabled",false);
             })
         })
     </script>
@@ -100,17 +104,24 @@
                 <td align="center"><input class="fp1" id="date1" name="idate" type="date"></td>
                 <td colspan="2" align="center"><button id="but1" class="form-item1" type="submit" disabled>面试</button>&nbsp;&nbsp;&nbsp;</td>
             </tr>
+        </form>
             <tr>
-                <td colspan="2" align="center"><br><button  type="button" id="but2" class="form-item1" ><a href="/Manager/admin?interviewID=${sessionScope.interviewID}&resumeID=${sessionScope.resume.id}">录取</a></button><br>&nbsp;&nbsp;&nbsp;</td>
-                <td colspan="2" align="center"><br><button type="button" class="form-item1" ><a href="/Manager/manager2">返回</a></button><br>&nbsp;&nbsp;&nbsp;</td>
+                <form action="/Manager/admin">
+                    <input type="number" name="interviewID" value="${sessionScope.interviewID}" hidden>
+                    <input type="number" name="resumeID" value="${sessionScope.resume.id}" hidden>
+                <td class="f2">录取工资:</td><td align="center"><input id="basicSalary" class="fp1" type="number" name="basicSalary"></td>
+                <td colspan="2" align="center"><br>
+                   <button  type="submit" id="but2"  class="form-item2" disabled>录取</button></form>
+                <button type="button" class="form-item2" ><a href="/Manager/manager2">返回</a></button><br>&nbsp;&nbsp;&nbsp;</td>
             </tr>
+
         </table>
 
 
 
 
             </tr>
-        </form>
+
     </div>
 </body>
 </html>

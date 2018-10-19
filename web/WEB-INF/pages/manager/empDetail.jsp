@@ -16,6 +16,7 @@
         html { height: 100%; }
         body { height: 100%; background: #fff url(/images/backgroud.png) 50% 50% no-repeat; background-size: cover;}
         .dowebok { position: absolute; left: 40%; top: 50%; width: 782px; height: 465px; margin: -250px 50px 50px -205px; border: 1px solid #fff; border-radius: 20px; overflow: hidden;}
+        .dowebok1 { position: absolute; left: 40%; top: 110%; width: 782px; height: 100px; margin: -250px 50px 50px -205px; border: 1px solid #fff; border-radius: 20px; overflow: hidden;}
         .logo { width: 104px; height: 104px; margin: 50px auto 80px; background: url(/images/login.png) 0 0 no-repeat; }
         .f1{ font-size: 20px; line-height: 1.4; color: #fff;}
         .f2{ font-size: 20px; line-height: 1.4; color: #fff;}
@@ -29,9 +30,9 @@
     <script src="/js/bootstrap-table.js"></script>
     <script>
         $(function () {
-            $("#l1").addClass('active');
-            $(".date1").change(function () {
-                $("#but1").attr("disabled",false);
+            $("#l5").addClass('active');
+            $("#rp").click(function () {
+                $("#tb2").show();
             })
         })
     </script>
@@ -49,35 +50,45 @@
             <input type="text" value="${sessionScope.employeeDetail.state}" name="state" hidden>
             <tr>
                 <td class="f1"><span><br>&nbsp;&nbsp;&nbsp;姓名:&nbsp;&nbsp;&nbsp;<br><br></span></td>
-                <td><input class="fp1" type="text" value="${sessionScope.employeeDetail.name}" name="name"></td>
+                <td><input class="fp1" type="text" value="${sessionScope.employeeDetail.name}" name="name" disabled></td>
                 <td class="f1"><span><br>&nbsp;&nbsp;&nbsp;年龄:&nbsp;&nbsp;&nbsp;<br><br></span></td>
-                <td><input class="fp1" type="text" value="${sessionScope.employeeDetail.age}" name="age"></td>
+                <td><input class="fp1" type="text" value="${sessionScope.employeeDetail.age}" name="age" disabled></td>
             </tr>
             <tr>
                 <td class="f1"><span><br>&nbsp;&nbsp;&nbsp;性别:&nbsp;&nbsp;&nbsp;<br><br></span></td>
-                <td><input class="fp1" type="text" value="${sessionScope.employeeDetail.sex}" name="sex">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td><input class="fp1" type="text" value="${sessionScope.employeeDetail.sex}" name="sex" disabled>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 <td class="f1"><span><br>&nbsp;&nbsp;&nbsp;学历:&nbsp;&nbsp;&nbsp;<br><br></span></td>
-                <td><input class="fp1" type="text"value="${sessionScope.employeeDetail.school}" name="school">&nbsp;&nbsp;&nbsp;</td>
+                <td><input class="fp1" type="text"value="${sessionScope.employeeDetail.school}" name="school" disabled>&nbsp;&nbsp;&nbsp;</td>
             </tr>
             <tr>
                 <td class="f1"><span><br>&nbsp;&nbsp;&nbsp;手机:&nbsp;&nbsp;&nbsp;<br><br></span></td>
-                <td><input class="fp1" type="text"value="${sessionScope.employeeDetail.pnumber}"name="pnumber"></td>
+                <td><input class="fp1" type="text"value="${sessionScope.employeeDetail.pnumber}"name="pnumber" disabled></td>
                 <td class="f1"><span><br>&nbsp;&nbsp;&nbsp;邮箱:&nbsp;&nbsp;&nbsp;<br><br></span></td>
-                <td><input class="fp1" type="text"value="${sessionScope.employeeDetail.email}" name="email"></td>
+                <td><input class="fp1" type="text"value="${sessionScope.employeeDetail.email}" name="email" disabled></td>
             </tr>
             <tr>
                 <td class="f1"><span><br>&nbsp;&nbsp;&nbsp;部门:&nbsp;&nbsp;&nbsp;<br><br></span></td>
                 <td class="f1"><input class="fp1" type="text"value="${sessionScope.employeeDetail.dept}" name="dept" disabled></td>
                 <td class="f1"><span><br>&nbsp;&nbsp;&nbsp;职位:&nbsp;&nbsp;&nbsp;<br><br></span></td>
                 <td class="f1"><input class="fp1" type="text"value="${sessionScope.employeeDetail.position}" name="position" disabled></td>
-            <tr>
-                <td class="f1" colspan="2" align="center">
-                    <br><button id="but1" class="form-item1" type="submit">修改</button><br><br>
-                </td>
-                <td class="f1" colspan="2" align="center"><br><button class="form-item1" ><a href="/Employee/employee">取消</a></button><br><br></td>
             </tr>
+            <tr><td colspan="2" align="center"><br><button class="form-item1" href="/Manager/manager5">返回</button><br>&nbsp;&nbsp;</td>
+            <td colspan="2" align="center"><br><button type="button" class="form-item1" id="rp">奖赏</button><br>&nbsp;&nbsp;</td></tr>
         </form>
     </table>
 </div>
+    <table id="tb2" class="dowebok1" hidden>
+            <form action="/Manager/addRp">
+                <tr>
+                    <input type="text" value="${sessionScope.employeeDetail.username}" name="username" hidden>
+                    <input class="fp1" type="text" value="${sessionScope.employeeDetail.name}" name="name" hidden>
+                    <td align="center"><input class="fp1" name="price" value="奖赏金额"></td>
+                    <td align="center"><input class="fp1" name="cause" value="奖赏原因"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><br><button class="form-item1" type="submit">奖赏</button></td></tr>
+            </form>
+    </table>
+
 </body>
 </html>

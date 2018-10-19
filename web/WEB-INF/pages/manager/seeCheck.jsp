@@ -26,7 +26,7 @@
     <script src="/js/bootstrap-table.js"></script>
     <script>
         $(function () {
-            $("#l2").addClass('active');
+            $("#l5").addClass('active');
             $("#but1").click(function () {
                 var date = "%"+$("#sele1").val()+"-"+$("#sele2").val()+"%";
                 $.ajax({
@@ -52,8 +52,8 @@
     </script>
 </head>
 <body>
-<jsp:include page="/employeeModel.jsp"></jsp:include>
-<h1 align="center" style="color: palevioletred">我的考勤</h1>
+<jsp:include page="/managerModel.jsp"></jsp:include>
+<h1 align="center" style="color: palevioletred">查看考勤</h1>
 <div class="dowebok" style="background-color: #bce8f1">
     <table id="tb1" class="table table-hover" style="background-color: white">
         <tr>
@@ -76,14 +76,16 @@
             </select>
             <button id="but1">查看</button></td>
         </tr>
+        <c:forEach items="${sessionScope.checkall}" var="check">
         <tr>
-            <td align="center">${sessionScope.check.id}</td>
-            <td align="center">${sessionScope.check.name}</td>
-            <td align="center"><fmt:formatDate value="${sessionScope.check.onduty}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
-            <td align="center">${sessionScope.check.ondutystate}</td>
-            <td align="center" ><fmt:formatDate value="${sessionScope.check.offduty}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
-            <td align="center" >${sessionScope.check.offdutystate}</td>
+            <td align="center">${check.id}</td>
+            <td align="center">${check.name}</td>
+            <td align="center"><fmt:formatDate value="${check.onduty}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
+            <td align="center">${check.ondutystate}</td>
+            <td align="center" ><fmt:formatDate value="${check.offduty}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
+            <td align="center" >${check.offdutystate}</td>
         </tr>
+        </c:forEach>
     </table>
 </div>
 </html>

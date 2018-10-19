@@ -4,20 +4,12 @@ import com.alibaba.fastjson.JSON;
 import com.lxd.project2.entity.*;
 import com.lxd.project2.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -47,6 +39,12 @@ public class ManagerController {
     private IEmployeeService iEmployeeService;
     @Autowired
     private ITrainService iTrainService;
+    @Autowired
+    private ISalaryService iSalaryService;
+    @Autowired
+    private IRpService iRpService;
+    @Autowired
+    private ICheckService iCheckService;
     /*
     跳转到界面1
      */
@@ -172,7 +170,7 @@ public class ManagerController {
     录取
      */
     @RequestMapping("admin")
-    public String changeVisitorCls2(int interviewID,int resumeID){
+    public String changeVisitorCls2(int interviewID,int resumeID,int basicSalary){
         Interview interview = iInterviewService.queryByID(interviewID);
         IID iid =new IID();
         iid.setInterviewID(interviewID);
@@ -181,10 +179,20 @@ public class ManagerController {
         Recruit recruit = iRecruitService.queryByID(iid1.getRecruitID());
         iVisitorService.changeVisitorCls2(interview.getUsername());
         Resume resume = iResumeService.queryByUserName(interview.getUsername());
+        Employee employee1 = iEmployeeService.queryByUsername(interview.getUsername());
+        if(employee1!=null){
+            return  "manager/manager2";
+        }
         Employee employee = new Employee(resume.getUsername(),resume.getName(),
                 resume.getSex(),resume.getAge(),resume.getSchool(),resume.getPnumber(),
                 resume.getEmail(),new Date(),recruit.getDept(),recruit.getPosition());
         iEmployeeService.add(employee);
+        //加进工资
+        Salary salary = new Salary();
+        salary.setUsername(interview.getUsername());
+        salary.setUsername(interview.getName());
+        salary.setBasicSalary(basicSalary);
+        iSalaryService.add(salary);
         return "manager/manager2";
     }
     /*
@@ -319,6 +327,24 @@ public class ManagerController {
         session.setAttribute("zzyg",list);
         session.setAttribute("syq",list1);
         return "manager/manager5";
+    }
+    @RequestMapping("addRp")
+    public String addRp(Rp rp){
+        rp.setDate(new Date());
+        iRpService.add(rp);
+        return "manager/manager5";
+    }
+    @RequestMapping("empDetail")
+    public String empDetail(int id,HttpSession session){
+        Employee employee = iEmployeeService.queryByID(id);
+        session.setAttribute("employeeDetail",employee);
+        return "manager/empDetail";
+    }
+    @RequestMapping("seeCheck")
+    public String seeCheck(String username,HttpSession session){
+        List<Check> checks = iCheckService.queryByUsername(username);
+        session.setAttribute("checkall",checks);
+        return "manager/seeCheck";
     }
     /*
    跳转界面6

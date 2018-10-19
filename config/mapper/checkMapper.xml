@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lxd.project2.dao.ICheckDao">
+    <insert id="addOnDuty" parameterType="Check">
+        insert INTO checks (username,name,onduty,ondutystate,offdutystate) VALUES (#{username},#{name},#{onduty},
+        #{ondutystate},#{offdutystate});
+    </insert>
+    <select id="queryByOnState" parameterType="String" resultType="Check">
+        select * from checks where onduty like #{onduy};
+    </select>
+    <insert id="addOffDuty" parameterType="Check">
+        update checks set offduty = #{offduty},offdutystate=#{offdutystate} where id = #{id};
+    </insert>
+    <select id="queryByMonth" parameterType="String" resultType="Check">
+        select * from checks where onduty LIKE #{onduty};
+    </select>
+    <select id="queryByUsername" parameterType="String" resultType="Check">
+        select * from checks where username = #{username};
+    </select>
+</mapper>

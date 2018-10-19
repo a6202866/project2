@@ -37,6 +37,22 @@
                 z.hide();
                 y.show();
             })
+            $(".date1").change(function () {
+                $(".but1").attr("disabled",false);
+            })
+            $(".but1").click(function () {
+                var x = new Date();
+                var y = $(".date1").val();
+                var cha = (Date.parse(x) - Date.parse(y)) / 86400000 * 24;
+                if (cha > 0) {
+                    alert("不能选择今天以前的时间");
+                    return false;
+                }
+                else {
+                    alert("发布成功！");
+                }
+            })
+
         })
     </script>
 </head>
@@ -55,13 +71,13 @@
         <form action="/Manager/addTrain">
             <tr class="addtarin" hidden>
                 <td align="center"><input type="text" name="name"></td>
-                <td align="center"><input type="date" name="date"></td>
+                <td align="center"><input type="date" name="date" class="date1"></td>
                 <td align="center"><select name="dept">
                     <c:forEach items="${sessionScope.dept}" var="dept">
                         <option>${dept.dept}</option>
                     </c:forEach>
                 </select></td>
-                <td colspan="2" align="center"><button type="submit">提交</button></td>
+                <td colspan="2" align="center"><button class="but1" type="submit" disabled>提交</button></td>
             </tr>
         </form>
 
@@ -69,13 +85,13 @@
             <table  class="table table-hover" style="background-color: white">
             <tr hidden><form action="/Manager/changeTrain"><input type="text" value="${train.id}" name="id" hidden>
                 <td style="height: 40px;width: 100px" align="center"><input type="text" name="name"value="${train.name}"></td>
-                <td  style="height: 40px;width: 100px" align="center"><input type="date" name="date" ></td>
+                <td  style="height: 40px;width: 100px" align="center"><input type="date" name="date" class="date1" ></td>
                 <td style="height: 40px;width: 100px" align="center"><select name="dept">
                     <c:forEach items="${sessionScope.dept}" var="dept">
-                        <option>${dept.dept}</option>
+                        <option <c:if test="${dept.dept==train.dept}">selected</c:if>>${dept.dept}</option>
                     </c:forEach>
                 </select></td>
-                <td  style="height: 40px;width: 100px"align="center"><button>修改</button>&nbsp;&nbsp;&nbsp;</td>
+                <td  style="height: 40px;width: 100px"align="center"><button class="but1" disabled>修改</button>&nbsp;&nbsp;&nbsp;</td>
             </form>
             </tr>
             <tr>
