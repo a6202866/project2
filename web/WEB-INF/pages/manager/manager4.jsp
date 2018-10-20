@@ -62,11 +62,11 @@
 <div class="dowebok" style="background-color: #bce8f1">
     <table  class="table table-hover" style="background-color: white">
         <tr>
-            <td  style="height: 40px;width: 100px"align="center">培训名称</td>
-            <td style="height: 40px;width: 100px" align="center">培训时间</td>
-            <td  style="height: 40px;width: 100px"align="center">培训部门</td>
-            <td  style="height: 40px;width: 100px"align="center" ><a id="addT">添加培训</a></td>
-            <td  style="height: 40px;width: 100px"align="center"><span>操作</span></td>
+            <td align="center">&nbsp;&nbsp;&nbsp;&nbsp;培训名称</td>
+            <td  align="center">培训时间</td>
+            <td  align="center">培训部门</td>
+
+            <td  align="center">  <a id="addT">添加培训</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>操作</span></td>
         </tr>
         <form action="/Manager/addTrain">
             <tr class="addtarin" hidden>

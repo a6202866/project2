@@ -1,3 +1,5 @@
+
+
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -5,8 +7,8 @@
   Time: 下午 4:22
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -25,11 +27,11 @@
     <script src="/js/bootstrap-table.js"></script>
     <script>
         $(function () {
-            $("#l6").addClass('active');
+            $("#l7").addClass('active');
             $("#but1").click(function () {
-                var date = "%"+$("#sele1").val()+"-"+$("#sele2").val()+"%";
+                var date = $("#sele1").val()+"-"+$("#sele2").val();
                 $.ajax({
-                    url:"/Manager/seeRp",
+                    url:"/Employee/seeSalary1",
                     contentType: "json; charset=utf-8",
                     data:{date:date},
                     success:function (data) {
@@ -38,11 +40,14 @@
                             for(var i = 0;i<data.length;i++){
                                 $("#tb1").append("<tr><td align='center'>"+data[i].id+"</td><td align='center'>"+
                                     data[i].name+"</td><td align='center'>"+
-                                    data[i].price+"</td><td align='center'>"+
-                                    data[i].cause+"</td><td align='center'>"+
-                                    (new Date(data[i].date).getYear()+1900)+"-"+
-                                    (new Date(data[i].date).getMonth()+1)+"-"+
-                                    new Date(data[i].date).getDate()+"</td><td align='center'><a href='updateRp?id="+data[i].id+"'>修改</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='/Manager/delRp?id="+data[i].id+"'>删除</a></td><tr>")
+                                    data[i].allSalary+"</td><td align='center'>"+
+                                    data[i].basicSalary+"</td><td align='center'>"+
+                                    data[i].pSalary+"</td><td align='center'>"+
+                                    data[i].overtimeSalary+"</td><td align='center'>"+
+                                    data[i].checkSalry+"</td><td align='center'>"+
+                                    data[i].socialSalary+"</td><td align='center'>"
+                                    +data[i].date+
+                                    "</td><td align='center'><a>"+提出异议+"</a></td><tr>")
                             }
                         }
                     }
@@ -52,39 +57,47 @@
     </script>
 </head>
 <body>
-<jsp:include page="/managerModel.jsp"></jsp:include>
-<h1 align="center" style="color: palevioletred">考勤管理</h1>
+<jsp:include page="/employeeModel.jsp"></jsp:include>
+<h1 align="center" style="color: palevioletred">薪资管理</h1>
 <div class="dowebok" style="background-color: #bce8f1">
     <table id="tb1" class="table table-hover" style="background-color: white">
         <tr>
             <td align="center">编号</td>
             <td align="center">姓名</td>
-            <td align="center">奖惩金额</td>
-            <td align="center">奖惩原因</td>
-            <td align="center" >奖惩时间</td>
-            <td align="center">操作</td>
-            <td align="center"><select id="sele1">
+            <td align="center">总工资</td>
+            <td align="center">基本工资</td>
+            <td align="center" >绩效工资</td>
+            <td align="center">加班工资</td>
+            <td align="center">奖惩工资</td>
+            <td align="center">社保</td>
+            <td align="center">日期</td>
+            <td>操作</td>
+            <td align="center"><select id="sele1" name="year">
                 <option>2016</option>
                 <option>2017</option>
                 <option>2018</option>
             </select>
-                <select id="sele2">
+                <select id="sele2" name="month">
                     <option>1</option><option>2</option><option>3</option>
                     <option>4</option><option>5</option><option>6</option>
                     <option>7</option><option>8</option><option>9</option>
                     <option>10</option><option>11</option><option>12</option>
                 </select>
-                <button id="but1">查看</button></td>
+                <button id="but1" type="button">查看</button>
         </tr>
-        <c:forEach items="${sessionScope.rps}" var="rp">
-        <tr>
-            <td align="center">${rp.id}</td>
-            <td align="center">${rp.name}</td>
-            <td align="center">${rp.price}</td>
-            <td align="center">${rp.cause}</td>
-            <td align="center" ><fmt:formatDate value="${rp.date}" pattern="yyyy-MM-dd"></fmt:formatDate></td>
-            <td colspan="2" align="center" ><a href="/Manager/updateRp?id=${rp.id}">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;<a  href="/Manager/delRp?id=${rp.id}">删除</a></td>
-        </tr>
+        <c:forEach items="${sessionScope.allSalary1}" var="Salary">
+            <tr>
+                <td align="center">${Salary.id}</td>
+                <td align="center">${Salary.name}</td>
+                <td align="center">${Salary.allSalary}</td>
+                <td align="center">${Salary.basicSalary}</td>
+                <td align="center" >${Salary.pSalary}</td>
+                <td align="center" >${Salary.overtimeSalary}</td>
+                <td align="center" >${Salary.checkSalry}</td>
+                <td align="center" >${Salary.socialSalary}</td>
+                <td align="center" >${Salary.date}</td>
+                <td><a>提出异议</a></td>
+            </tr>
         </c:forEach>
     </table>
 </div>

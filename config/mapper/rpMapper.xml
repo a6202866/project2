@@ -4,4 +4,25 @@
    <insert id="add" parameterType="Rp">
        INSERT into rp (username,name,price,cause,date) VALUES (#{username},#{name},#{price},#{cause},#{date});
    </insert>
+    <select id="queryAll" resultType="Rp">
+        SELECT * from rp;
+    </select>
+    <select id="queryByDate" resultType="Rp" parameterType="String">
+        SELECT * from rp where date like #{date};
+    </select>
+    <delete id="deleteById" parameterType="int">
+        delete from rp where id = #{id};
+    </delete>
+    <select id="queryById" parameterType="int" resultType="Rp">
+        SELECT * from rp where id = #{id};
+    </select>
+    <update id="changeRp" parameterType="Rp">
+        UPDATE rp set name = #{name},price= #{price},cause=#{cause},date=#{date} where id=#{id};
+    </update>
+    <select id="queryByUsername" parameterType="String" resultType="Rp">
+        SELECT * from rp where username = #{username};
+    </select>
+    <select id="queryByDateUsername" parameterType="String" resultType="Rp">
+        select * from rp where username = #{0} and date LIKE #{1};
+    </select>
 </mapper>

@@ -35,8 +35,9 @@
                     data:{date:date},
                     success:function (data) {
                         if(data!=0){
+                            $("#tb1 tr:not(:first)").remove();
                             for(var i = 0;i<data.length;i++){
-                                $("#tb1 tr:not(:first)").remove();
+
                                 $("#tb1").append("<tr><td align='center'>"+data[i].id+"</td><td align='center'>"+
                                     data[i].name+"</td><td align='center'>"+
                                     data[i].onduty+"</td><td align='center'>"+

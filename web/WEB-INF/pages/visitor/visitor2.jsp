@@ -115,8 +115,8 @@
                     <select id="sel4" class="form-control" name ="position" >
                         <option>--请选择--</option>
                         <c:forEach items="${sessionScope.positions}" var="position">
-                            <option <c:if test="${position.position==sessionScope.resume.position}">selected</c:if>>${position.position}</option>
-                        </c:forEach>
+                        <option <c:if test="${position.position==sessionScope.resume.position}">selected</c:if>>${position.position}</option>
+                    </c:forEach>
                     </select></td>
                 <td class="f1"><span>期望薪资:</span></td>
                 <td><input class="fp1" type="text"value="${sessionScope.resume.salary}" name="salary"></td>

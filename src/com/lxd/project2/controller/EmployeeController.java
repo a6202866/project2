@@ -3,9 +3,7 @@ package com.lxd.project2.controller;
 import com.alibaba.fastjson.JSON;
 import com.lxd.project2.dao.ICheckDao;
 import com.lxd.project2.dao.IRpDao;
-import com.lxd.project2.entity.Check;
-import com.lxd.project2.entity.Employee;
-import com.lxd.project2.entity.Rp;
+import com.lxd.project2.entity.*;
 import com.lxd.project2.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -48,6 +47,8 @@ public class EmployeeController {
     private ICheckService iCheckService;
     @Autowired
     private IRpService iRpService;
+    @Autowired
+    private ISalaryService iSalaryService;
     @RequestMapping("employee")
     public String employee(){
         return "employee/employee";
@@ -70,11 +71,11 @@ public class EmployeeController {
         Date time1 = sdf.parse(d1);
         if(time1.getTime()-time.getTime()>0&&time1.getTime()-time.getTime()<10800000){
             check.setOndutystate("迟到");
-            Rp rp = new Rp(employee.getUsername(),employee.getName(),50,"迟到",new Date());
+            Rp rp = new Rp(employee.getUsername(),employee.getName(),-50,"迟到",new Date());
             iRpService.add(rp);
         }else if(time1.getTime()-time.getTime()>=10800000){
             check.setOndutystate("旷工");
-            Rp rp = new Rp(employee.getUsername(),employee.getName(),50,"旷工",new Date());
+            Rp rp = new Rp(employee.getUsername(),employee.getName(),-200,"旷工",new Date());
             iRpService.add(rp);
         }else{
             check.setOndutystate("准时");
@@ -103,12 +104,12 @@ public class EmployeeController {
             String d1 = sdf.format(date);
             Date time1 = sdf.parse(d1);
             if(time.getTime()-time1.getTime()>0&&time.getTime()-time1.getTime()<10800000){
-                Rp rp = new Rp(check.getUsername(),check.getName(),50,"早退",new Date());
+                Rp rp = new Rp(check.getUsername(),check.getName(),-50,"早退",new Date());
                 iRpService.add(rp);
                 check.setOffdutystate("早退");
             }else if(time.getTime()-time1.getTime()>=10800000){
                 check.setOffdutystate("旷工");
-                Rp rp = new Rp(check.getUsername(),check.getName(),50,"旷工",new Date());
+                Rp rp = new Rp(check.getUsername(),check.getName(),-200,"旷工",new Date());
                 iRpService.add(rp);
             } else {
                 check.setOffdutystate("准时");
@@ -148,8 +149,22 @@ public class EmployeeController {
         return "employee/employee3";
     }
     @RequestMapping("employee4")
-    public String employee4(){
+    public String employee4(HttpSession session){
+        Visitor visitor = (Visitor) session.getAttribute("user");
+        String username = visitor.getName();
+        List<Rp> list = iRpService.queryByUsername(username);
+        session.setAttribute("rpss",list);
         return "employee/employee4";
+    }
+    @RequestMapping(value = "seeRp1", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String seeRp1(String date,HttpSession session){
+        Visitor visitor = (Visitor) session.getAttribute("user");
+        String username= visitor.getName();
+        List<Rp> list = iRpService.queryByDateUsername(username,date);
+        String json = JSON.toJSONString(list);
+        return json;
+
     }
     @RequestMapping("employee5")
     public String employee5(){
@@ -158,5 +173,52 @@ public class EmployeeController {
     @RequestMapping("employee6")
     public String employee6(){
         return "employee/employee6";
+    }
+    @RequestMapping("employee7")
+    public String employee7(HttpSession session){
+        List<Salary> list = iSalaryService.queryAll();
+        List<Salary> list1 = new ArrayList<Salary>() ;
+        Visitor visitor = (Visitor) session.getAttribute("user");
+        String username= visitor.getName();
+        for(Salary salary:list){
+            if(username.equals(salary.getUsername())){
+                list1.add(salary);
+            }
+        }
+        int i = -1;
+        for(Salary salary:list1){
+            if(salary.getSocialSalary()==0){
+                i=list1.indexOf(salary);
+            }
+        }
+        if(i!=-1){
+            list1.remove(i);
+        }
+        session.setAttribute("allSalary1",list1);
+        return "employee/employee7";
+    }
+    @RequestMapping(value = "seeSalary1", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String seeSalary(String date,HttpSession session){
+        List<Salary> list= iSalaryService.qeuryByDate(date);
+        List<Salary> list1 = new ArrayList<Salary>() ;
+        Visitor visitor = (Visitor) session.getAttribute("user");
+        String username= visitor.getName();
+        for(Salary salary:list){
+            if(username.equals(salary.getUsername())){
+                list1.add(salary);
+            }
+        }
+        int i = -1;
+        for(Salary salary:list1){
+            if(salary.getSocialSalary()==0){
+                i=list1.indexOf(salary);
+            }
+        }
+        if(i!=-1){
+            list1.remove(i);
+        }
+        String json = JSON.toJSONString(list1);
+        return json;
     }
 }

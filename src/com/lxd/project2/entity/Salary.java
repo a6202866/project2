@@ -1,5 +1,7 @@
 package com.lxd.project2.entity;
 
+import java.util.Date;
+
 /**
  * Created by Administrator on 2018/10/19 0019.
  */
@@ -13,11 +15,11 @@ public class Salary {
     private double overtimeSalary;
     private double checkSalry;
     private double socialSalary;
-
+    private String date;
     public Salary() {
     }
 
-    public Salary(int id, String username, String name, double allSalary, double basicSalary, double pSalary, double overtimeSalary, double checkSalry, double socialSalary) {
+    public Salary(int id, String username, String name, double allSalary, double basicSalary, double pSalary, double overtimeSalary, double checkSalry, double socialSalary, String date) {
         this.id = id;
         this.username = username;
         this.name = name;
@@ -27,6 +29,19 @@ public class Salary {
         this.overtimeSalary = overtimeSalary;
         this.checkSalry = checkSalry;
         this.socialSalary = socialSalary;
+        this.date = date;
+    }
+
+    public Salary(String username, String name, double allSalary, double basicSalary, double pSalary, double overtimeSalary, double checkSalry, double socialSalary, String date) {
+        this.username = username;
+        this.name = name;
+        this.allSalary = allSalary;
+        this.basicSalary = basicSalary;
+        this.pSalary = pSalary;
+        this.overtimeSalary = overtimeSalary;
+        this.checkSalry = checkSalry;
+        this.socialSalary = socialSalary;
+        this.date = date;
     }
 
     public int getId() {
@@ -101,6 +116,14 @@ public class Salary {
         this.socialSalary = socialSalary;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     @Override
     public String toString() {
         return "Salary{" +
@@ -113,6 +136,7 @@ public class Salary {
                 ", overtimeSalary=" + overtimeSalary +
                 ", checkSalry=" + checkSalry +
                 ", socialSalary=" + socialSalary +
+                ", date='" + date + '\'' +
                 '}';
     }
 }

@@ -11,4 +11,10 @@
     <select id="queryByID" resultType="Recruit" parameterType="int">
         SELECT * from recruit WHERE id = #{id};
     </select>
+    <delete id="deleteById" parameterType="int">
+        DELETE from recruit where id = #{id};
+    </delete>
+    <update id="changeRecruit" parameterType="Recruit">
+        UPDATE recruit set name=#{name},address=#{address},dept=#{dept},position=#{position},salary=#{salary} where id = #{id};
+    </update>
 </mapper>

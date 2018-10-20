@@ -31,4 +31,14 @@ public class RecruitServiceImpl implements IRecruitService {
     public Recruit queryByID(int id) {
         return iRecruitDao.queryByID(id);
     }
+
+    @Override
+    public void deleteById(int id) {
+        iRecruitDao.deleteById(id);
+    }
+
+    @Override
+    public void changeRecruit(Recruit recruit) {
+        iRecruitDao.changeRecruit(recruit);
+    }
 }

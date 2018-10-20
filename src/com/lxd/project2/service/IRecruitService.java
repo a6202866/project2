@@ -11,4 +11,7 @@ public interface IRecruitService {
     void add(Recruit recruit);
     public List<Recruit> queryAll();
     Recruit queryByID(int id);
+    void deleteById(int id);
+    void changeRecruit(Recruit recruit);
+
 }

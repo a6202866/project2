@@ -5,6 +5,7 @@ import com.lxd.project2.entity.*;
 import com.lxd.project2.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -350,15 +351,112 @@ public class ManagerController {
    跳转界面6
     */
     @RequestMapping("manager6")
-    public String manager6(){
+    public String manager6(HttpSession session){
+        List<Rp> list = iRpService.queryAll();
+        session.setAttribute("rps",list);
+        return "manager/manager6";
+    }
+    @RequestMapping(value = "seeRp", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String seeRp(String date){
+        List<Rp> list = iRpService.queryByDate(date);
+        String json = JSON.toJSONString(list);
+        return json;
+    }
+    @RequestMapping("delRp")
+    public String delRp(int id,HttpSession session){
+        iRpService.deleteById(id);
+        List<Rp> list = iRpService.queryAll();
+        session.setAttribute("rps",list);
+        return "manager/manager6";
+    }
+    @RequestMapping("updateRp")
+    public String updateRp(int id,HttpServletRequest request){
+        Rp rp = iRpService.queryById(id);
+        request.setAttribute("changeRp",rp);
+        return "manager/changeRp";
+    }
+    @RequestMapping("updateRp1")
+    public String updateRp(Rp rp,HttpSession session){
+        rp.setDate(new Date());
+        iRpService.changeRp(rp);
+        List<Rp> list = iRpService.queryAll();
+        session.setAttribute("rps",list);
         return "manager/manager6";
     }
     /*
    跳转界面7
     */
     @RequestMapping("manager7")
-    public String manager7(){
+    public String manager7(HttpSession session){
+        List<Salary> list2 = iSalaryService.queryAll();
+
+        System.out.println(list2);
+        List<Salary> list3 = iSalaryService.queryAll();
+        /*for(Salary salary:list2){
+            if(salary.getSocialSalary()==0){
+                list3.remove(salary);
+            }
+        }*/
+        for(int i = list2.size()-1;i>=0;i--){
+            if (list2.get(i).getSocialSalary()==0){
+                list3.remove(i);
+            }
+        }
+        session.setAttribute("allSalary",list3);
         return "manager/manager7";
+    }
+    @Transactional
+    @RequestMapping("fSalary")
+    public String fSalary(HttpSession session,String year,String month){
+        String date = year+"-"+month;
+        System.out.println(date);
+        if(iSalaryService.qeuryByDate(date).size()>0){
+            return "manager/manager7";
+        }
+        //循环每个员工
+        List<Employee> list = iEmployeeService.queryAll();
+        for(Employee employee:list){
+            //得到该员工奖惩
+            List<Rp> list1 = iRpService.queryByUsername(employee.getUsername());
+            int days = 22-list1.size();
+            double checkSalary = 0;
+            double overtimeSalary=0;
+            if(days>=0){
+                checkSalary = days*(-200);
+                for(Rp rp : list1){
+                    checkSalary = checkSalary+rp.getPrice();
+                }
+            }else {
+                overtimeSalary= days*-200;
+                for(Rp rp : list1){
+                    checkSalary = checkSalary+rp.getPrice();
+                }
+            }
+            List<Salary> list2 = iSalaryService.queryByUsername(employee.getUsername());
+            double basicSalary = list2.get(0).getBasicSalary();
+            double allSalary = basicSalary+checkSalary+overtimeSalary+0-500;
+            String date1 = year+"-"+month;
+            Salary salary = new Salary(employee.getUsername(),employee.getName(),allSalary,basicSalary,0,overtimeSalary,checkSalary,-500,date1);
+            iSalaryService.add1(salary);
+        }
+        List<Salary> list2 = iSalaryService.queryAll();
+        System.out.println(list2);
+        List<Salary> list3 = iSalaryService.queryAll();
+        for(int i = list2.size()-1;i>=0;i--){
+            if (list2.get(i).getSocialSalary()==0){
+                list3.remove(i);
+            }
+        }
+        session.setAttribute("allSalary",list3);
+        return "manager/manager7";
+    }
+    @RequestMapping(value = "seeSalary", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String seeSalary(String date){
+        List<Salary> list= iSalaryService.qeuryByDate(date);
+        String json = JSON.toJSONString(list);
+        return json;
     }
     /*
    跳转界面8
@@ -367,5 +465,31 @@ public class ManagerController {
     public String manager8(){
         return "manager/manager8";
     }
-
+    @RequestMapping("zptetail")
+    public String zptetail(HttpSession session){
+        List<Recruit> list = iRecruitService.queryAll();
+        session.setAttribute("recruits",list);
+        return "manager/zpdetail";
+    }
+    @RequestMapping("deleteRecruit")
+    public String deleteRecruit(int id,HttpSession session){
+        iRecruitService.deleteById(id);
+        List<Recruit> list = iRecruitService.queryAll();
+        session.setAttribute("recruits",list);
+        return "manager/zpdetail";
+    }
+    @RequestMapping("updateRecruit")
+    public String updateRecruit(HttpServletRequest request,int id){
+        Recruit recruit = iRecruitService.queryByID(id);
+        request.setAttribute("changeR",recruit);
+        return "manager/updateRecruit";
+    }
+    @RequestMapping("changeRecruit")
+    public String changeRecruit(Recruit recruit,HttpSession session){
+        System.out.println(recruit);
+        iRecruitService.changeRecruit(recruit);
+        List<Recruit> list = iRecruitService.queryAll();
+        session.setAttribute("recruits",list);
+        return "manager/zpdetail";
+    }
 }

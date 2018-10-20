@@ -31,6 +31,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li id="l1"><a href="/Manager/manager1">写招聘</a></li>
+                <li id="l11"><a href="/Manager/zptetail">招聘详情</a></li>
                 <li id="l2"><a href="/Manager/manager2">应聘管理 <span class="sr-only">(current)</span></a></li>
                 <li id="l3"><a href="/Manager/manager3">部门职位</a></li>
                 <li id="l4"><a href="/Manager/manager4">培训管理</a></li>

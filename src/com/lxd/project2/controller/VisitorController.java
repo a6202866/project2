@@ -46,6 +46,7 @@ public class VisitorController {
     private IEmployeeService iEmployeeService;
     @Autowired
     private ITrainService iTrainService;
+
     /**
      * 注册，通过名字查找
      * @param name

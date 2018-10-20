@@ -4,4 +4,17 @@
     <insert id="add" parameterType="Salary">
         insert into salary (username,name,basicSalary) VALUES (#{username},#{name},#{basicSalary});
     </insert>
+    <select id="qeuryByDate" parameterType="String" resultType="Salary">
+        SELECT * from salary where date = date;
+    </select>
+    <select id="queryByUsername" parameterType="String" resultType="Salary">
+        SELECT * from salary where username = #{username};
+    </select>
+    <insert id="add1" parameterType="Salary">
+        INSERT into salary (username,name,allSalary,basicSalary,pSalary,overtimeSalary,checkSalry,socialSalary,date)
+        VALUES (#{username},#{name},#{allSalary},#{basicSalary},#{pSalary},#{overtimeSalary},#{checkSalry},#{socialSalary},#{date});
+    </insert>
+    <select id="queryAll" resultType="Salary">
+        SELECT * from salary;
+    </select>
 </mapper>

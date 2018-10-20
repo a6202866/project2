@@ -57,7 +57,7 @@
             <td align="center">姓名</td>
             <td align="center">部门</td>
             <td align="center">职位</td>
-            <td colspan="3" align="center" ><span style="margin:0 0 0 150px">操作</span></td>
+            <td colspan="2" align="center" ><span style="margin:0 0 0 150px">操作</span></td>
             <td align="center"><select id="sele1">
                 <option>在职员工</option>
                 <option>试用期</option>
@@ -72,7 +72,6 @@
                 <td align="center">${employee.position}</td>
                 <td align="center"><a href="/Manager/changeEmployee?id=${employee.id}">人事调动</a></td>
                 <td align="center"><a href="/Manager/seeCheck?username=${employee.username}">考勤</a></td>
-                <td align="center"><a>工资发放</a></td>
                 <td align="center"><a class="deleteEmp" href="/Manager/deleteEmployee?id=${employee.id}">开除</a></td>
             </tr>
         </c:forEach>
@@ -85,7 +84,6 @@
                     <td align="center">${employee.position}</td>
                     <td align="center"><a href="/Manager/changeEmployee?id=${employee.id}">人事调动</a></td>
                     <td align="center"><a href="/Manager/seeCheck?username=${employee.username}">考勤</a></td>
-                    <td align="center"><a>工资发放</a></td>
                     <td align="center"><a class="deleteEmp" href="/Manager/deleteEmployee?id=${employee.id}">开除</a></td>
                 </tr>
             </c:forEach>

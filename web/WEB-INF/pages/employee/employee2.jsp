@@ -35,13 +35,24 @@
                     data:{date:date},
                     success:function (data) {
                         if(data!=0){
+                            $("#tb1 tr:not(:first)").remove();
                             for(var i = 0;i<data.length;i++){
-                                $("#tb1 tr:not(:first)").remove();
+
                                 $("#tb1").append("<tr><td align='center'>"+data[i].id+"</td><td align='center'>"+
                                     data[i].name+"</td><td align='center'>"+
-                                    data[i].onduty+"</td><td align='center'>"+
+                                    (new Date(data[i].onduty).getYear()+1900)+"-"+
+                                    (new Date(data[i].onduty).getMonth()+1)+"-"+
+                                    new Date(data[i].onduty).getDate()+" "+
+                                    new Date(data[i].onduty).getHours()+":"+
+                                    new Date(data[i].onduty).getMinutes()+":"+
+                                    new Date(data[i].onduty).getMilliseconds()+"</td><td align='center'>"+
                                     data[i].ondutystate+"</td><td align='center'>"+
-                                    data[i].offduty+"</td><td align='center'>"+
+                                    (new Date(data[i].offduty).getYear()+1900)+"-"+
+                                    (new Date(data[i].offduty).getMonth()+1)+"-"+
+                                    new Date(data[i].offduty).getDate()+" "+
+                                    new Date(data[i].offduty).getHours()+":"+
+                                    new Date(data[i].offduty).getMinutes()+":"+
+                                    new Date(data[i].offduty).getMilliseconds()+"</td><td align='center'>"+
                                     data[i].offdutystate+"</td><tr>")
                             }
                         }
