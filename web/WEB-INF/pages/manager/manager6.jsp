@@ -83,7 +83,7 @@
             <td align="center">${rp.price}</td>
             <td align="center">${rp.cause}</td>
             <td align="center" ><fmt:formatDate value="${rp.date}" pattern="yyyy-MM-dd"></fmt:formatDate></td>
-            <td colspan="2" align="center" ><a href="/Manager/updateRp?id=${rp.id}">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;<a  href="/Manager/delRp?id=${rp.id}">删除</a></td>
+            <td align="center" ><a href="/Manager/updateRp?id=${rp.id}">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;<a  href="/Manager/delRp?id=${rp.id}">删除</a></td>
         </tr>
         </c:forEach>
     </table>

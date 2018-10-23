@@ -12,7 +12,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>管理员平台</title>
+    <title>员工平台</title>
     <style>
         * { margin: 0; padding: 0; }
         html { height: 100%; }
@@ -53,6 +53,11 @@
                     }
                 })
             })
+            $(".but1").click(function () {
+                var name=prompt("请输入您的名字")
+                $(".res1").val(name)
+                alert("提交成功")
+            })
         })
     </script>
 </head>
@@ -86,7 +91,10 @@
                 <button id="but1" type="button">查看</button>
         </tr>
         <c:forEach items="${sessionScope.allSalary1}" var="Salary">
-            <tr>
+            <tr><form action="/Employee/addDif">
+                <input type="text" name="Sid" hidden value="${Salary.id}">
+                <input type="text" name="name" hidden value="${Salary.name}">
+                <input type="text" name="username" hidden value="${Salary.username}">
                 <td align="center">${Salary.id}</td>
                 <td align="center">${Salary.name}</td>
                 <td align="center">${Salary.allSalary}</td>
@@ -96,7 +104,9 @@
                 <td align="center" >${Salary.checkSalry}</td>
                 <td align="center" >${Salary.socialSalary}</td>
                 <td align="center" >${Salary.date}</td>
-                <td><a>提出异议</a></td>
+                <td><input type="text" class="res1" name="reason" hidden>
+                    <button class="but1" type="submit">提出异议</button></td>
+                </form>
             </tr>
         </c:forEach>
     </table>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lxd.project2.dao.IReasonDao">
+   <insert id="add" parameterType="Reason">
+       INSERT INTO reason (sid,username,name,reason,date) VALUES (#{Sid},#{username},#{name},#{reason},#{date});
+   </insert>
+    <select id="queryAll" resultType="Reason">
+        SELECT * from reason;
+    </select>
+    <delete id="deleteById" parameterType="int">
+        delete from reason where id = #{id};
+    </delete>
+</mapper>

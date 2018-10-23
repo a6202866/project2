@@ -10,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,6 +47,8 @@ public class EmployeeController {
     private IRpService iRpService;
     @Autowired
     private ISalaryService iSalaryService;
+    @Autowired
+    private IReasonService iReasonService;
     @RequestMapping("employee")
     public String employee(){
         return "employee/employee";
@@ -196,6 +196,18 @@ public class EmployeeController {
         }
         session.setAttribute("allSalary1",list1);
         return "employee/employee7";
+    }
+    @RequestMapping("addDif")
+    public String addDif(int Sid,String reason,String name,String username){
+        Reason reason1 = new Reason();
+        reason1.setDate(new Date());
+        reason1.setReason(reason);
+        reason1.setSid(Sid);
+        reason1.setName(name);
+        reason1.setUsername(username);
+        iReasonService.add(reason1);
+        return "employee/employee7";
+
     }
     @RequestMapping(value = "seeSalary1", produces = "application/json; charset=utf-8")
     @ResponseBody

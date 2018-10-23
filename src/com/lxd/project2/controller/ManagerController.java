@@ -46,6 +46,8 @@ public class ManagerController {
     private IRpService iRpService;
     @Autowired
     private ICheckService iCheckService;
+    @Autowired
+    private IReasonService iReasonService;
     /*
     跳转到界面1
      */
@@ -340,6 +342,11 @@ public class ManagerController {
         Employee employee = iEmployeeService.queryByID(id);
         session.setAttribute("employeeDetail",employee);
         return "manager/empDetail";
+    }@RequestMapping("empDetail1")
+    public String empDetail1(String username,HttpSession session){
+        Employee employee = iEmployeeService.queryByUsername(username);
+        session.setAttribute("employeeDetail",employee);
+        return "manager/empDetail";
     }
     @RequestMapping("seeCheck")
     public String seeCheck(String username,HttpSession session){
@@ -462,9 +469,19 @@ public class ManagerController {
    跳转界面8
     */
     @RequestMapping("manager8")
-    public String manager8(){
+    public String manager8(HttpSession session){
+        List<Reason> list = iReasonService.queryAll();
+        session.setAttribute("reasons",list);
         return "manager/manager8";
     }
+    @RequestMapping("delReason")
+    public String delReason(int id,HttpSession session){
+        iReasonService.deleteById(id);
+        List<Reason> list = iReasonService.queryAll();
+        session.setAttribute("reasons",list);
+        return "manager/manager8";
+    }
+
     @RequestMapping("zptetail")
     public String zptetail(HttpSession session){
         List<Recruit> list = iRecruitService.queryAll();

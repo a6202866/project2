@@ -38,12 +38,12 @@
     </script>
 </head>
 <body>
-<jsp:include page="/employeeModel.jsp"></jsp:include>
+<jsp:include page="/managerModel.jsp"></jsp:include>
 <h1 align="center" style="color: whitesmoke">个人信息</h1>
 <div id="t2" class="dowebok">
     <table style="border: whitesmoke" border="1px" cellspacing="10px" cellpadding="10px" >
         <br>
-        <form action="/Employee/updateEmployee">
+        <form>
             <input type="text" value="${sessionScope.employeeDetail.id}" name="id" hidden>
             <input type="text" value="${sessionScope.employeeDetail.username}" name="username" hidden>
             <input type="text" value="${sessionScope.employeeDetail.date}" name="date"hidden>
@@ -72,7 +72,7 @@
                 <td class="f1"><span><br>&nbsp;&nbsp;&nbsp;职位:&nbsp;&nbsp;&nbsp;<br><br></span></td>
                 <td class="f1"><input class="fp1" type="text"value="${sessionScope.employeeDetail.position}" name="position" disabled></td>
             </tr>
-            <tr><td colspan="2" align="center"><br><button class="form-item1" href="/Manager/manager5">返回</button><br>&nbsp;&nbsp;</td>
+            <tr><td colspan="2" align="center"><br><button class="form-item1"><a  href="/Manager/manager5">返回</a></button><br>&nbsp;&nbsp;</td>
             <td colspan="2" align="center"><br><button type="button" class="form-item1" id="rp">奖赏</button><br>&nbsp;&nbsp;</td></tr>
         </form>
     </table>
